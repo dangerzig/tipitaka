@@ -32,7 +32,7 @@ pali_consonants <-
     "p", "ph", "b", "bh", "m",
     "y", "r", "l", "v", "s", "h", "\u1e37", "\u1e43")
 
-pali_alphabet <-c(pali_vowels, pali_consonants)
+pali_alphabet <- c(pali_vowels, pali_consonants)
 
 # This is just an internal helper function to break Pali words
 # into a vector of letters, respecting the fact that 'dh',
@@ -96,7 +96,7 @@ pali_lt <- function(word1, word2) {
 #' @return TRUE if word1 and word2 are the same
 #' @export
 pali_eq <- function(word1, word2) {
-  return (tolower(word1) == tolower(word2))
+  return(tolower(word1) == tolower(word2))
 }
 
 
@@ -148,12 +148,16 @@ pali_gt <- function(word1, word2) {
 #' @return A new vector of Pali words in Pali alphabetical order
 #'
 #' @examples
-#' # Every unique word of of the Mahāsatipaṭṭhāna Sutta in Pali alphabetical order
+#' # Every unique word of of the Mahāsatipatthāna Sutta in
+#' # Pali alphabetical order -- warning, can be slow!
+#' \dotrun{}
 #' pali_sort(sati_sutta_long$word)
+#' }
 #'
-#' # A sorted list of 100 radom words from the Tiptaka
-#' library(tidyverse)
+#' # A sorted list of 100 random words from the Tiptaka
+#' library(dplyr)
 #' pali_sort(sample(tipitaka_long$word, 100))
+#'
 #' @export
 pali_sort <- function(word_list) {
   if (length(word_list) <= 1)
@@ -188,7 +192,7 @@ pali_sort <- function(word_list) {
 #' built-in strings to more readble form.
 #'
 #' @param string A Pali string that has Unicode escape characters (optional)
-#' @return The string converted to Pali characters, or nothing if no string is passed
+#' @return The string converted to Pali characters (if provided)
 #' @export
 pali_string_fix <- function(string) {
   if (missing(string)) {
@@ -206,4 +210,3 @@ pali_string_fix <- function(string) {
   else
     return(stringi::stri_unescape_unicode(string))
 }
-

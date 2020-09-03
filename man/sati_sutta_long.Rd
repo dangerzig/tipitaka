@@ -3,7 +3,7 @@
 \docType{data}
 \name{sati_sutta_long}
 \alias{sati_sutta_long}
-\title{Mahāsatipaṭṭhāna Sutta in "long" form}
+\title{Mahāsatipatthāna Sutta in "long" form}
 \format{
 An object of class \code{data.frame} with 832 rows and 4 columns.
 }
@@ -14,7 +14,7 @@ Vipassana Research Institute, CST4, April 2020
 sati_sutta_long
 }
 \description{
-The Mahāsatipaṭṭhāna Sutta or Discourse on the Establishing
+The Mahāsatipatthāna Sutta or Discourse on the Establishing
 of Mindfulness in "long" form.
 }
 \keyword{datasets}

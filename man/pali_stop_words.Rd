@@ -18,8 +18,8 @@ A list of all declinables and particles from the PTS
 Pali-English Dictionary.
 }
 \examples{
-# Find most common words in the Mahāsatipaṭṭhāna Sutta excluding stop words
-library(tidyverse)
+# Find most common words in the Mahāsatipatthāna Sutta excluding stop words
+library(dplyr)
 sati_sutta_long \%>\%
   anti_join(pali_stop_words, by = "word") \%>\%
   arrange(desc(freq))

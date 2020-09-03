@@ -13,8 +13,8 @@
 #'
 #' The package tipitaka provides access to the complete Pali
 #' Canon, or Tipitaka, from R. The Tipitaka is the canonical
-#' scriptire for Therevadin Buddhists worldwide. This version
-#' is largely taken from the Chaṭṭha Saṅgāyana Tipiṭaka
+#' scripture for Therevadin Buddhists worldwide. This version
+#' is largely taken from the Chattha Sangāyana Tipitaka
 #' version 4.0 com;iled by the Vispassana Research Institute,
 #' although edits have been made to conform to the numbering
 #' used by the Pali Text Society. This package provides both
@@ -31,8 +31,8 @@
 #'   \item sutta_pitaka: the names of each volume of the Sutta Pitaka
 #'   \item vinaya_pitaka: the names of each volume of the Vinaya Pitaka
 #'   \item abhidhamma_pitaka: the names of each volume of the Abhidhamma Pitak
-#'   \item sati_sutta_raw: the Mahāsatipaṭṭhāna Sutta text
-#'   \item sati_sutta_long: the Mahāsatipaṭṭhāna Sutta in "long" form
+#'   \item sati_sutta_raw: the Mahāsatipatthāna Sutta text
+#'   \item sati_sutta_long: the Mahāsatipatthāna Sutta in "long" form
 #'   \item pali_alphabet: the complete pali alphabet in traditional order
 #'   \item pali_stop_words: a set of "stop words" for Pali
 #'   }
@@ -123,7 +123,9 @@ NULL
 #'
 #' @examples
 #' # Count all the words in the Suttas:
-#' sum(unique(tipitaka_long[tipitaka_long$book %in% sutta_pitaka$book, "total"]))
+#' sum(
+#'   unique(
+#'     tipitaka_long[tipitaka_long$book %in% sutta_pitaka$book, "total"]))
 #'
 #' # Count another way:
 #' sum(tipitaka_long[tipitaka_long$book %in% sutta_pitaka$book, "n"])
@@ -175,17 +177,17 @@ NULL
 
 
 
-#' Mahāsatipaṭṭhāna Sutta in "long" form
+#' Mahāsatipatthāna Sutta in "long" form
 #'
-#' The Mahāsatipaṭṭhāna Sutta or Discourse on the Establishing
+#' The Mahāsatipatthāna Sutta or Discourse on the Establishing
 #' of Mindfulness in "long" form.
 #'
 #' @source Vipassana Research Institute, CST4, April 2020
 "sati_sutta_long"
 
-#' Mahāsatipaṭṭhāna Sutta text in raw form
+#' Mahāsatipatthāna Sutta text in raw form
 #'
-#' The unprocessed text of the Mahāsatipaṭṭhāna Sutta
+#' The unprocessed text of the Mahāsatipatthāna Sutta
 #'
 #' @format A tibble with the variable:
 #' \describe{
@@ -202,8 +204,8 @@ NULL
 #' Pali-English Dictionary.
 #'
 #' @examples
-#' # Find most common words in the Mahāsatipaṭṭhāna Sutta excluding stop words
-#' library(tidyverse)
+#' # Find most common words in the Mahāsatipatthāna Sutta excluding stop words
+#' library(dplyr)
 #' sati_sutta_long %>%
 #'   anti_join(pali_stop_words, by = "word") %>%
 #'   arrange(desc(freq))
@@ -219,7 +221,7 @@ NULL
 #' @examples
 #' # Returns TRUE because a cmes before b in Pali:
 #' match("a", pali_alphabet) < match("b", pali_alphabet)
-#' # Returns FALSE beceause c comes before B in Pali
+#' # Returns FALSE beceause c comes before b in Pali
 #' match("b", pali_alphabet) < match("c", pali_alphabet)
 #'
 "pali_alphabet"

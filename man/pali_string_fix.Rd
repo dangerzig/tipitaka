@@ -10,7 +10,7 @@ pali_string_fix(string)
 \item{string}{A Pali string that has Unicode escape characters (optional)}
 }
 \value{
-The string converted to Pali characters, or nothing if no string is passed
+The string converted to Pali characters (if provided)
 }
 \description{
 CRAN requires that all Pali strings be rendered in ASCII

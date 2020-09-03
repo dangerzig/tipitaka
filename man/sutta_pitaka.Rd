@@ -21,7 +21,9 @@ the Sutta Pitaka. These are easier to read if you call
 }
 \examples{
 # Count all the words in the Suttas:
-sum(unique(tipitaka_long[tipitaka_long$book \%in\% sutta_pitaka$book, "total"]))
+sum(
+  unique(
+    tipitaka_long[tipitaka_long$book \%in\% sutta_pitaka$book, "total"]))
 
 # Count another way:
 sum(tipitaka_long[tipitaka_long$book \%in\% sutta_pitaka$book, "n"])

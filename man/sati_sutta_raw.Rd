@@ -3,7 +3,7 @@
 \docType{data}
 \name{sati_sutta_raw}
 \alias{sati_sutta_raw}
-\title{Mahāsatipaṭṭhāna Sutta text in raw form}
+\title{Mahāsatipatthāna Sutta text in raw form}
 \format{
 A tibble with the variable:
 \describe{
@@ -17,6 +17,6 @@ Vipassana Research Institute, CST4, April 2020
 sati_sutta_raw
 }
 \description{
-The unprocessed text of the Mahāsatipaṭṭhāna Sutta
+The unprocessed text of the Mahāsatipatthāna Sutta
 }
 \keyword{datasets}

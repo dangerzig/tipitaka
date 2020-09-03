@@ -7,8 +7,8 @@
 \description{
 The package tipitaka provides access to the complete Pali
 Canon, or Tipitaka, from R. The Tipitaka is the canonical
-scriptire for Therevadin Buddhists worldwide. This version
-is largely taken from the Chaṭṭha Saṅgāyana Tipiṭaka
+scripture for Therevadin Buddhists worldwide. This version
+is largely taken from the Chattha Sangāyana Tipitaka
 version 4.0 com;iled by the Vispassana Research Institute,
 although edits have been made to conform to the numbering
 used by the Pali Text Society. This package provides both
@@ -26,8 +26,8 @@ Several data sets are included:
   \item sutta_pitaka: the names of each volume of the Sutta Pitaka
   \item vinaya_pitaka: the names of each volume of the Vinaya Pitaka
   \item abhidhamma_pitaka: the names of each volume of the Abhidhamma Pitak
-  \item sati_sutta_raw: the Mahāsatipaṭṭhāna Sutta text
-  \item sati_sutta_long: the Mahāsatipaṭṭhāna Sutta in "long" form
+  \item sati_sutta_raw: the Mahāsatipatthāna Sutta text
+  \item sati_sutta_long: the Mahāsatipatthāna Sutta in "long" form
   \item pali_alphabet: the complete pali alphabet in traditional order
   \item pali_stop_words: a set of "stop words" for Pali
   }
