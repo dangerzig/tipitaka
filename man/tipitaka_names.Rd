@@ -19,9 +19,4 @@ tipitaka_names
 Names of each book of the Tipitaka, both abbreviated and
 in full. These are easier to read if you call \code{pali_string_fix() first}.
 }
-\examples{
-# Look up the full name of the book "Thig"
-tipitaka_names[which(tipitaka_names$book == "Thig"), "name"]
-
-}
 \keyword{datasets}

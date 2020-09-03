@@ -7,9 +7,9 @@ Authors@R:
            family = "Zigmond",
            role = c("aut", "cre"),
            email = "djz@shmonk.com")
-Description: The package tipitaka provides access to the complete 
-    Pali Canon, or Tipitaka, the canonical scripture for 
-    Theravadin Buddhists worldwide. 
+Description:Provides access to the complete Pali Canon, or 
+    Tipitaka, the canonical scripture for Theravadin Buddhists 
+    worldwide. 
 License: CC0
 Encoding: UTF-8
 LazyData: true

@@ -102,9 +102,6 @@ NULL
 #'   \item{book}{Abbreviated title}
 #'   \item{name}{Full title}
 #' }
-#' @examples
-#' # Look up the full name of the book "Thig"
-#' tipitaka_names[which(tipitaka_names$book == "Thig"), "name"]
 #'
 "tipitaka_names"
 
