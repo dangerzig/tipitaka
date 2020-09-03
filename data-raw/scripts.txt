@@ -1,0 +1,6 @@
+Pali alphabet:
+  
+aāiīuūeoṃkgṅcjjhñṭḍṇtdnpbmyrlḷvsh
+AĀIĪUŪEOṂKGṄCJJHÑṬḌṆTDNPBMYRLḶVSH
+
+awk '{print $2}' indecl.raw | grep "[^˚]$"| sed 'y/AĀIĪUŪEOṂKGṄCJJHÑṬḌṆTDNPBMYRLḶVSH/aāiīuūeoṃkgṅcjjhñṭḍṇtdnpbmyrlḷvsh/' | uniq > indecl.txt 
