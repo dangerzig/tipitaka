@@ -11,7 +11,7 @@ A tibble with the variable:
 }
 }
 \source{
-Vipassana Research Institute, CST4
+Vipassana Research Institute, CST4, April 2020
 }
 \usage{
 sati_sutta_raw

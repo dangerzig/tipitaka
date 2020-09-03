@@ -61,7 +61,7 @@ NULL
 #' \item{book}{Abbreviated book name of each volume}
 #' }
 #'
-#' @source Vipassana Research Institute, CST4
+#' @source Vipassana Research Institute, CST4, April 2020
 "tipitaka_raw"
 
 
@@ -79,7 +79,7 @@ NULL
 #' \item{book}{Abbreviated book name}
 #' }
 #'
-#' @source Vipassana Research Institute, CST4
+#' @source Vipassana Research Institute, CST4, April 2020
 "tipitaka_long"
 
 
@@ -90,18 +90,21 @@ NULL
 #' which that word appears in that book.
 #'
 #'
-#' @source Vipassana Research Institute, CST4
+#' @source Vipassana Research Institute, CST4, April 2020
 "tipitaka_wide"
 
 
 #' Names of each book of the Tipitaka, both abbreviated and
-#' in full.
+#' in full. These are easier to read if you call \code{pali_string_fix() first}.
 #'
 #' @format A tibble with the variables:
 #' \describe{
 #'   \item{book}{Abbreviated title}
 #'   \item{name}{Full title}
 #' }
+#' @examples
+#' # Look up the full name of the book "Thig"
+#' tipitaka_names[which(tipitaka_names$book == "Thig"), "name"]
 #'
 "tipitaka_names"
 
@@ -109,40 +112,65 @@ NULL
 #' All the books of the Sutta Pitaka
 #'
 #' A subset of tipitaka_names consisting of only the books of
-#' the Sutta Pitaka.
+#' the Sutta Pitaka. These are easier to read if you call
+#' \code{pali_string_fix() first}.
 #'
 #' @format A tibble with the variables:
 #' \describe{
 #'   \item{book}{Abbreviated title}
 #'   \item{name}{Full title}
-#'}
+#' }
+#'
+#' @examples
+#' # Count all the words in the Suttas:
+#' sum(unique(tipitaka_long[tipitaka_long$book %in% sutta_pitaka$book, "total"]))
+#'
+#' # Count another way:
+#' sum(tipitaka_long[tipitaka_long$book %in% sutta_pitaka$book, "n"])
+#'
+#' # Create a tibble of just the Suttas
+#' sutta_wide <-
+#'   tipitaka_wide[row.names(tipitaka_wide) %in% sutta_pitaka$book,]
+#'
 "sutta_pitaka"
 
 
 #' All the books of the Vinaya Pitaka
 #'
 #' A subset of tipitaka_names consisting of only the books of
-#' the Vinaya Pitaka.
+#' the Vinaya Pitaka. These are easier to read if you call
+#' \code{pali_string_fix() first}.
 #'
 #' @format A tibble with the variables:
 #' \describe{
 #'   \item{book}{Abbreviated title}
 #'   \item{name}{Full title}
 #'}
+#'
+#' @examples
+#' # Count all the words in the Vinaya Pitaka:
+#' sum(tipitaka_long[tipitaka_long$book %in% vinaya_pitaka$book, "n"])
+#'
 "vinaya_pitaka"
 
 
 #' All the books of the Abhidhamma Pitaka
 #'
 #' A subset of tipitaka_names consisting of only the books of
-#' the Abhidhamma Pitaka.
+#' the Abhidhamma Pitaka. These are easier to read if you call
+#' \code{pali_string_fix() first}.
 #'
 #' @format A tibble with the variables:
 #' \describe{
 #'
 #'   \item{book}{Abbreviated title}
 #'   \item{name}{Full title}
-#'}
+#'}\
+#'
+#' @examples
+#' # Count all the words in the Abhidhamma Pitaka:
+#' sum(tipitaka_long[tipitaka_long$book %in% abhidhamma_pitaka$book, "n"])
+#'
 "abhidhamma_pitaka"
 
 
@@ -152,7 +180,7 @@ NULL
 #' The Mahāsatipaṭṭhāna Sutta or Discourse on the Establishing
 #' of Mindfulness in "long" form.
 #'
-#' @source Vipassana Research Institute, CST4
+#' @source Vipassana Research Institute, CST4, April 2020
 "sati_sutta_long"
 
 #' Mahāsatipaṭṭhāna Sutta text in raw form
@@ -164,7 +192,7 @@ NULL
 #' \item{text}{Complete text}
 #' }
 #'
-#' @source Vipassana Research Institute, CST4
+#' @source Vipassana Research Institute, CST4, April 2020
 "sati_sutta_raw"
 
 
@@ -173,6 +201,13 @@ NULL
 #' A list of all declinables and particles from the PTS
 #' Pali-English Dictionary.
 #'
+#' @examples
+#' # Find most common words in the Mahāsatipaṭṭhāna Sutta excluding stop words
+#' library(tidyverse)
+#' sati_sutta_long %>%
+#'   anti_join(pali_stop_words, by = "word") %>%
+#'   arrange(desc(freq))
+#'
 #' @source \url{https://dsalsrv04.uchicago.edu/dictionaries/pali/}
 "pali_stop_words"
 
@@ -180,5 +215,12 @@ NULL
 #' Pali alphabet in order
 #'
 #' @format The Pali alphabet in traditional order.
+#'
+#' @examples
+#' # Returns TRUE because a cmes before b in Pali:
+#' match("a", pali_alphabet) < match("b", pali_alphabet)
+#' # Returns FALSE beceause c comes before B in Pali
+#' match("b", pali_alphabet) < match("c", pali_alphabet)
+#'
 "pali_alphabet"
 

@@ -20,3 +20,11 @@ It is MUCH slower than the built-in sort, but respects Pali
 alphabetical order. (It takes about 60 seconds to sort 10,000
 random Pali words on my Mac; sort takes less than 1 sec!)
 }
+\examples{
+# Every unique word of of the Mahāsatipaṭṭhāna Sutta in Pali alphabetical order
+pali_sort(sati_sutta_long$word)
+
+# A sorted list of 100 radom words from the Tiptaka
+library(tidyverse)
+pali_sort(sample(tipitaka_long$word, 100))
+}

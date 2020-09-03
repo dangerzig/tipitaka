@@ -4,7 +4,7 @@
 \name{tipitaka_names}
 \alias{tipitaka_names}
 \title{Names of each book of the Tipitaka, both abbreviated and
-in full.}
+in full. These are easier to read if you call \code{pali_string_fix() first}.}
 \format{
 A tibble with the variables:
 \describe{
@@ -17,6 +17,11 @@ tipitaka_names
 }
 \description{
 Names of each book of the Tipitaka, both abbreviated and
-in full.
+in full. These are easier to read if you call \code{pali_string_fix() first}.
+}
+\examples{
+# Look up the full name of the book "Thig"
+tipitaka_names[which(tipitaka_names$book == "Thig"), "name"]
+
 }
 \keyword{datasets}

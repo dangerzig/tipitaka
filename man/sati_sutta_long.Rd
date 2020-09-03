@@ -8,7 +8,7 @@
 An object of class \code{data.frame} with 832 rows and 4 columns.
 }
 \source{
-Vipassana Research Institute, CST4
+Vipassana Research Institute, CST4, April 2020
 }
 \usage{
 sati_sutta_long

@@ -8,7 +8,7 @@
 An object of class \code{data.frame} with 46 rows and 141360 columns.
 }
 \source{
-Vipassana Research Institute, CST4
+Vipassana Research Institute, CST4, April 2020
 }
 \usage{
 tipitaka_wide

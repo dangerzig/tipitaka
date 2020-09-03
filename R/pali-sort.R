@@ -146,6 +146,14 @@ pali_gt <- function(word1, word2) {
 #'
 #' @param word_list A vector of Pali words
 #' @return A new vector of Pali words in Pali alphabetical order
+#'
+#' @examples
+#' # Every unique word of of the Mahāsatipaṭṭhāna Sutta in Pali alphabetical order
+#' pali_sort(sati_sutta_long$word)
+#'
+#' # A sorted list of 100 radom words from the Tiptaka
+#' library(tidyverse)
+#' pali_sort(sample(tipitaka_long$word, 100))
 #' @export
 pali_sort <- function(word_list) {
   if (length(word_list) <= 1)

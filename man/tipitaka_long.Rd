@@ -15,7 +15,7 @@ A tibble with the variables:
 }
 }
 \source{
-Vipassana Research Institute, CST4
+Vipassana Research Institute, CST4, April 2020
 }
 \usage{
 tipitaka_long

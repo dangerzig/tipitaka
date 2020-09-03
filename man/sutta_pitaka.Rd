@@ -16,6 +16,19 @@ sutta_pitaka
 }
 \description{
 A subset of tipitaka_names consisting of only the books of
-the Sutta Pitaka.
+the Sutta Pitaka. These are easier to read if you call
+\code{pali_string_fix() first}.
+}
+\examples{
+# Count all the words in the Suttas:
+sum(unique(tipitaka_long[tipitaka_long$book \%in\% sutta_pitaka$book, "total"]))
+
+# Count another way:
+sum(tipitaka_long[tipitaka_long$book \%in\% sutta_pitaka$book, "n"])
+
+# Create a tibble of just the Suttas
+sutta_wide <-
+  tipitaka_wide[row.names(tipitaka_wide) \%in\% sutta_pitaka$book,]
+
 }
 \keyword{datasets}

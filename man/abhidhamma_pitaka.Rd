@@ -10,13 +10,19 @@ A tibble with the variables:
 
   \item{book}{Abbreviated title}
   \item{name}{Full title}
-}
+}\
 }
 \usage{
 abhidhamma_pitaka
 }
 \description{
 A subset of tipitaka_names consisting of only the books of
-the Abhidhamma Pitaka.
+the Abhidhamma Pitaka. These are easier to read if you call
+\code{pali_string_fix() first}.
+}
+\examples{
+# Count all the words in the Abhidhamma Pitaka:
+sum(tipitaka_long[tipitaka_long$book \%in\% abhidhamma_pitaka$book, "n"])
+
 }
 \keyword{datasets}
