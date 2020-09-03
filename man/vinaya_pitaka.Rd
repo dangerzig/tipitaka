@@ -17,9 +17,13 @@ vinaya_pitaka
 \description{
 A subset of tipitaka_names consisting of only the books of
 the Vinaya Pitaka. These are easier to read if you call
-\code{pali_string_fix() first}.
+\code{stringi::stri_unescape_unicode} first.
 }
 \examples{
+# Clean up the Unicode characters to make things more readble:
+vinaya_pitaka$name <-
+  stringi::stri_unescape_unicode(vinaya_pitaka$name)
+
 # Count all the words in the Vinaya Pitaka:
 sum(tipitaka_long[tipitaka_long$book \%in\% vinaya_pitaka$book, "n"])
 

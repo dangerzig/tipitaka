@@ -103,6 +103,11 @@ NULL
 #'   \item{name}{Full title}
 #' }
 #'
+#' @examples
+#' # Clean up the Unicode characters to make things more readble:
+#' tipitaka_names$name <-
+#'   stringi::stri_unescape_unicode(tipitaka_names$name)
+#'
 "tipitaka_names"
 
 
@@ -110,7 +115,7 @@ NULL
 #'
 #' A subset of tipitaka_names consisting of only the books of
 #' the Sutta Pitaka. These are easier to read if you call
-#' \code{pali_string_fix() first}.
+#' \code{stringi::stri_unescape_unicode} first.
 #'
 #' @format A tibble with the variables:
 #' \describe{
@@ -119,6 +124,9 @@ NULL
 #' }
 #'
 #' @examples
+#' # Clean up the Unicode characters to make things more readble:
+#' sutta_pitaka$name <-
+#'   stringi::stri_unescape_unicode(sutta_pitaka$name)
 #' # Count all the words in the Suttas:
 #' sum(
 #'   unique(
@@ -138,7 +146,7 @@ NULL
 #'
 #' A subset of tipitaka_names consisting of only the books of
 #' the Vinaya Pitaka. These are easier to read if you call
-#' \code{pali_string_fix() first}.
+#' \code{stringi::stri_unescape_unicode} first.
 #'
 #' @format A tibble with the variables:
 #' \describe{
@@ -147,6 +155,10 @@ NULL
 #'}
 #'
 #' @examples
+#' # Clean up the Unicode characters to make things more readble:
+#' vinaya_pitaka$name <-
+#'   stringi::stri_unescape_unicode(vinaya_pitaka$name)
+#'
 #' # Count all the words in the Vinaya Pitaka:
 #' sum(tipitaka_long[tipitaka_long$book %in% vinaya_pitaka$book, "n"])
 #'
@@ -167,6 +179,10 @@ NULL
 #'}\
 #'
 #' @examples
+#' # Clean up the Unicode characters to make things more readble:
+#' abhidhamma_pitaka$name <-
+#'   stringi::stri_unescape_unicode(abhidhamma_pitaka$name)
+#'
 #' # Count all the words in the Abhidhamma Pitaka:
 #' sum(tipitaka_long[tipitaka_long$book %in% abhidhamma_pitaka$book, "n"])
 #'

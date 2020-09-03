@@ -21,6 +21,10 @@ the Abhidhamma Pitaka. These are easier to read if you call
 \code{pali_string_fix() first}.
 }
 \examples{
+# Clean up the Unicode characters to make things more readble:
+abhidhamma_pitaka$name <-
+  stringi::stri_unescape_unicode(abhidhamma_pitaka$name)
+
 # Count all the words in the Abhidhamma Pitaka:
 sum(tipitaka_long[tipitaka_long$book \%in\% abhidhamma_pitaka$book, "n"])
 

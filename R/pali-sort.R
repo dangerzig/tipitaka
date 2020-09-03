@@ -150,7 +150,7 @@ pali_gt <- function(word1, word2) {
 #' @examples
 #' # Every unique word of of the Mahāsatipatthāna Sutta in
 #' # Pali alphabetical order -- warning, can be slow!
-#' \dotrun{}
+#' \dontrun{
 #' pali_sort(sati_sutta_long$word)
 #' }
 #'
@@ -177,36 +177,4 @@ pali_sort <- function(word_list) {
   return(c(pali_sort(pivot_less),
            pivot,
            pali_sort(pivot_greater)))
-}
-
-
-#' Make built-in Pali strings more readable.
-#'
-#' CRAN requires that all Pali strings be rendered in ASCII
-#' characters, so letters with diacritics have to be represented
-#' with Unicode escape codes (ie, "ā" becomes "\\u0101"). This
-#' converts all those strings back to more readable forms. If
-#' you call it with a string argument, it returns that string
-#' with the Unicode escape codes converted to Pali characters.
-#' If you call without any arguments, it simply converts the
-#' built-in strings to more readble form.
-#'
-#' @param string A Pali string that has Unicode escape characters (optional)
-#' @return The string converted to Pali characters (if provided)
-#' @export
-pali_string_fix <- function(string) {
-  if (missing(string)) {
-    pali_alphabet <<-
-      stringi::stri_unescape_unicode(pali_alphabet)
-    tipitaka_names$name <<-
-      stringi::stri_unescape_unicode(tipitaka_names$name)
-    sutta_pitaka$name <<-
-      stringi::stri_unescape_unicode(sutta_pitaka$name)
-    vinaya_pitaka$name <<-
-      stringi::stri_unescape_unicode(vinaya_pitaka$name)
-    abhidhamma_pitaka$name <<-
-      stringi::stri_unescape_unicode(abhidhamma_pitaka$name)
-  }
-  else
-    return(stringi::stri_unescape_unicode(string))
 }

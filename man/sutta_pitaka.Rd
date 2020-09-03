@@ -17,9 +17,12 @@ sutta_pitaka
 \description{
 A subset of tipitaka_names consisting of only the books of
 the Sutta Pitaka. These are easier to read if you call
-\code{pali_string_fix() first}.
+\code{stringi::stri_unescape_unicode} first.
 }
 \examples{
+# Clean up the Unicode characters to make things more readble:
+sutta_pitaka$name <-
+  stringi::stri_unescape_unicode(sutta_pitaka$name)
 # Count all the words in the Suttas:
 sum(
   unique(

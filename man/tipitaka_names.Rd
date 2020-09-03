@@ -19,4 +19,10 @@ tipitaka_names
 Names of each book of the Tipitaka, both abbreviated and
 in full. These are easier to read if you call \code{pali_string_fix() first}.
 }
+\examples{
+# Clean up the Unicode characters to make things more readble:
+tipitaka_names$name <-
+  stringi::stri_unescape_unicode(tipitaka_names$name)
+
+}
 \keyword{datasets}
