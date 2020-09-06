@@ -5,7 +5,7 @@
 \alias{pali_stop_words}
 \title{Tentative set of "stop words" for Pali}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 145 rows and 1 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 245 rows and 1 columns.
 }
 \source{
 \url{https://dsalsrv04.uchicago.edu/dictionaries/pali/}

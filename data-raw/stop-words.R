@@ -8,10 +8,8 @@ library(tidyverse)
 
 pali_stop_words <- read_lines("indecl.txt")
 pali_stop_words <- tibble(pali_stop_words)
-colnames(new_stop_words) = c("word")
-pali_stop_words <- pali_stop_words %>%
-  unique() %>%
-  pali_sort()
+colnames(pali_stop_words) = c("word")
+pali_stop_words$word <- pali_sort(unique(pali_stop_words$word))
 
 colnames(pali_stop_words) = c("word")
 
