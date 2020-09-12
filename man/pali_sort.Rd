@@ -23,7 +23,7 @@ random Pali words on my Mac; sort takes less than 1 sec!)
 \examples{
 # Every unique word of of the Mahāsatipatthāna Sutta in
 # Pali alphabetical order -- warning, can be slow!
-\dontrun{
+\donttest{
 pali_sort(sati_sutta_long$word)
 }
 
