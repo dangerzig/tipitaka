@@ -1,12 +1,6 @@
 # Pali Helper Functions
 #
 # Here are some helper functions for working with Pali.
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Install Package:           'Cmd + Shift + B'
-#   Check Package:             'Cmd + Shift + E'
-#   Test Package:              'Cmd + Shift + T'
 
 library(stringr)
 library(stringi)

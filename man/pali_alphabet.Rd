@@ -14,7 +14,7 @@ pali_alphabet
 Pali alphabet in order
 }
 \examples{
-# Returns TRUE because a cmes before b in Pali:
+# Returns TRUE because a comes before b in Pali:
 match("a", pali_alphabet) < match("b", pali_alphabet)
 # Returns FALSE beceause c comes before b in Pali
 match("b", pali_alphabet) < match("c", pali_alphabet)
