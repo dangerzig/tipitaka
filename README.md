@@ -7,12 +7,12 @@
 
 <!-- badges: end -->
 
-The goal of tipitaka is to allow students and reserachers to apply the
+The goal of tipitaka is to allow students and researchers to apply the
 tools of computational linguistics to the ancient Buddhist texts known
 as the Tipitaka or Pali Canon.
 
 The Tipitaka is the canonical scripture of Theravadin Buddhists
-worldside. It purports to record the direct teachings of the historical
+worldwide. It purports to record the direct teachings of the historical
 Buddha. It was first recorded in written form in what is now Sri Lanka,
 likely around 100 BCE.
 
@@ -35,7 +35,7 @@ have made a few edits to the CST4 files in creating this package:
     corrected.
 
 There is no universal script for Pali; traditionally each Buddhist
-country ususes its own script to write Pali phoneticaly. This package
+country ususes its own script to write Pali phonetically. This package
 uses the Roman script and the diacritical system developed by the PTS.
 However, note that the Pali alphabet does NOT follow the alphabetical
 ordering of English or other Roman-script languages. For this reason,

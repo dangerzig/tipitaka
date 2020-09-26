@@ -18,9 +18,9 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of tipitaka is to allow students and reserachers to apply the tools of computational linguistics to the ancient Buddhist texts known as the Tipitaka or Pali Canon. 
+The goal of tipitaka is to allow students and researchers to apply the tools of computational linguistics to the ancient Buddhist texts known as the Tipitaka or Pali Canon. 
 
-The Tipitaka is the canonical scripture of Theravadin Buddhists worldside. It purports to record the direct teachings of the historical Buddha. It was first recorded in written form in what is now Sri Lanka, likely around 100 BCE.
+The Tipitaka is the canonical scripture of Theravadin Buddhists worldwide. It purports to record the direct teachings of the historical Buddha. It was first recorded in written form in what is now Sri Lanka, likely around 100 BCE.
 
 The tipitaka package primarily consists of the texts of the Tipitaka in various electronic forms, plus a few simple functions and data structures for working with the Pali language. 
 
@@ -32,7 +32,7 @@ The version of the Tipitaka included here is based on what's known as the Chatth
 
 * A very few typos that were found while processing have been corrected.
 
-There is no universal script for Pali; traditionally each Buddhist country ususes its own script to write Pali phoneticaly. This package uses the Roman script and the diacritical system developed by the PTS. However, note that the Pali alphabet does NOT follow the alphabetical ordering of English or other Roman-script languages. For this reason, tipitaka includes `pali_alphabet` giving the full Pali alphabet in order, and the functions, `pali_lt`, `pali_gt`, `pali_eq`, and `pali_sort` for comparing and sorting Pali strings.
+There is no universal script for Pali; traditionally each Buddhist country ususes its own script to write Pali phonetically. This package uses the Roman script and the diacritical system developed by the PTS. However, note that the Pali alphabet does NOT follow the alphabetical ordering of English or other Roman-script languages. For this reason, tipitaka includes `pali_alphabet` giving the full Pali alphabet in order, and the functions, `pali_lt`, `pali_gt`, `pali_eq`, and `pali_sort` for comparing and sorting Pali strings.
 
 ## Installation
 
