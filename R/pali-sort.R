@@ -59,19 +59,16 @@ explode <- function(pali_word) {
 pali_lt <- function(word1, word2) {
   temp1 <- explode(tolower(word1))
   temp2 <- explode(tolower(word2))
+  nomatch <- length(pali_alphabet) + 1 # value for non-Pali letters
   for (i in c(1:length(temp1))) {
     if (i > length(temp2)) {
       return(FALSE)
     }
-    else if (match(temp1[i], pali_alphabet,
-                   nomatch = length(pali_alphabet) + 1) <
-             match(temp2[i], pali_alphabet,
-                   nomatch = length(pali_alphabet) + 1)) {
+    else if (match(temp1[i], pali_alphabet, nomatch = nomatch) <
+             match(temp2[i], pali_alphabet, nomatch = nomatch)) {
       return(TRUE)
-    } else if (match(temp1[i], pali_alphabet,
-                     nomatch = length(pali_alphabet) + 1) >
-               match(temp2[i], pali_alphabet,
-                     nomatch = length(pali_alphabet) + 1)) {
+    } else if (match(temp1[i], pali_alphabet, nomatch = nomatch) >
+               match(temp2[i], pali_alphabet, nomatch = nomatch)) {
           return(FALSE)
     }
   }
@@ -105,29 +102,10 @@ pali_eq <- function(word1, word2) {
 #' @return TRUE if word1 comes after word2 alphabetically
 #' @export
 pali_gt <- function(word1, word2) {
-  temp1 <- explode(tolower(word1))
-  temp2 <- explode(tolower(word2))
-  for (i in c(1:length(temp1))) {
-    if (i > length(temp2)) {
-      return(TRUE)
-    }
-    else if (match(temp1[i], pali_alphabet,
-                   nomatch = length(pali_alphabet) + 1) >
-             match(temp2[i], pali_alphabet,
-                   nomatch = length(pali_alphabet) + 1)) {
-      return(TRUE)
-    } else if (match(temp1[i], pali_alphabet,
-                     nomatch = length(pali_alphabet) + 1) <
-               match(temp2[i], pali_alphabet,
-                     nomatch = length(pali_alphabet) + 1)) {
-      return(FALSE)
-    }
-  }
-  if (stringr::str_length(word1) > stringr::str_length(word2))
-    return(TRUE)
-  else
-    return(FALSE)
+  # Defined in terms of pali_lt so the logic can live in one place
+  return(!pali_eq(word1, word2) & !pali_lt(word1, word2))
 }
+
 
 #' Sorting function for vectors of Pali words.
 #'
