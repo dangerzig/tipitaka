@@ -78,7 +78,77 @@ Note that the Pali alphabet does *not* follow the alphabetical ordering of Engli
 
 This package also includes `pali_stop_words`, a preliminary set of "stop words" for Pali, which is based on the words labeled as "indeclinable" or "participle" in the PTS *Pali-English Dictionary* [@PED], as well as the most common pronouns [@Geiger]. This is useful in semenatic analysis where such very common words should be excluded.
 
+# Examples 
+The following are examples of simple analyses using the `tiptaka` package.
+
+## Cluster dendrograms
+
+The `tipitaka_wide` structure is particulatly well-suited to clustering applications. A simple cluster dendrogram of the Pali Canon can be created with just a few lines of R:
+
+```R
+library(tipitaka)
+dist_m <- dist(tipitaka_wide)
+cluster <- hclust(dist_m)
+plot(cluster)
+```
+
+![](man/figures/README-dendogram-1.png)
+
+## K-means clusters
+
+We can also perform basic k-means clustering using this same distance measure, illustrated here using the excellent `factoextra` package [@factoextra]:
+
+```R
+library(factoextra) 
+km <- kmeans(dist_m, 2, nstart = 25, algorithm = "Lloyd")
+fviz_cluster(km, dist_m, labelsize = 12, repel = TRUE)
+```
+
+![](man/figures/README-kmeans-1.png)
+
+## Word clouds
+The `_long` forms are well-suited to creating word clouds based on word frequency, shown here with stop words removed and illustrated with the `wordcloud` package @wordcloud:
+
+```R
+library(wordcloud)
+library(dplyr)
+sati_sutta_long %>%
+  anti_join(pali_stop_words, by = "word") %>%
+  with(wordcloud(word, n, max.words = 40)) 
+````
+
+![](man/figures/README-wordclouds-1.png)
+
+## Frequency by rank
+
+Finally, we can plot Pali word frequency by rank across the entire *Tipiṭaka*, revealing a classic power law distribution: 
+
+```R
+library(dplyr)
+freq_by_rank <- tipitaka_long %>%
+  group_by(word) %>%
+  add_count(wt = n, name = "word_total") %>%
+  ungroup() %>%
+  distinct(word, .keep_all = TRUE) %>%
+  mutate(tipitaka_total =  
+           sum(distinct(tipitaka_long, book, 
+                        .keep_all = TRUE)$total)) %>%
+    transform(freq = word_total/tipitaka_total) %>%
+  arrange(desc(freq)) %>%
+  mutate(rank = row_number()) %>%
+  select(-n, -total, -book)
+
+freq_by_rank %>%
+  ggplot(aes(rank, freq)) +
+  geom_line(size = 1.1, alpha = 0.8, show.legend = FALSE) +
+  scale_x_log10() +
+  scale_y_log10()
+```
+
+![](man/figures/README-freq-by-word-1.png)
+
 # Limitations and future work
+This is intended to be the first, preliminary relese of `tipitaka`. Much more work remains to be done. The following are still in progress:
 
 ## Volume numbering
 As mentioned above, `tipitaka` attempts to match the structure of the PTS edition of the *Tipiṭaka*, but it does not do so perfectly. The PTS and CST4 editions differ in the way they divide the *Tipiṭaka* into volumes. The resulting numbering in `tipitaka` is as follows:
