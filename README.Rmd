@@ -52,7 +52,7 @@ devtools::install_github("dangerzig/tipitaka")
 
 You can use tipitaka to do clustering analysis of the various books of the Pali Canon. For example:
 
-```{r dendogram, echo=FALSE}
+```{r dendogram, message = FALSE, warning = FALSE}
 library(tipitaka)
 dist_m <- dist(tipitaka_wide)
 cluster <- hclust(dist_m)
@@ -61,7 +61,7 @@ plot(cluster)
 
 You can also create traditional k-means clusters and visualize these using packages like `factoextra`:
 
-```{r kmeans, echo=FALSE, message=FALSE}
+```{r kmeans, message = FALSE, warning = FALSE}
 library(factoextra) # great visualizer for clusters
 km <- kmeans(dist_m, 2, nstart = 25, algorithm = "Lloyd")
 fviz_cluster(km, dist_m, labelsize = 12, repel = TRUE)
@@ -69,7 +69,7 @@ fviz_cluster(km, dist_m, labelsize = 12, repel = TRUE)
 
 You can also explore the topics of various parts of the Tipitaka using packges like `wordcloud`:
 
-```{r wordclouds, echo=FALSE, message=FALSE}
+```{r wordclouds, message = FALSE, warning = FALSE}
 library(wordcloud)
 library(dplyr)
 sati_sutta_long %>%
@@ -78,7 +78,7 @@ sati_sutta_long %>%
 ```
 
 Finally, we can look at word frequency by rank:
-```{r freq-by-word, echo=FALSE}
+```{r freq-by-word, message = FALSE, warning = FALSE}
 library(dplyr, quietly = TRUE)
 freq_by_rank <- tipitaka_long %>%
   group_by(word) %>%
