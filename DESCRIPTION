@@ -7,7 +7,7 @@ Authors@R:
            family = "Zigmond",
            role = c("aut", "cre"),
            email = "djz@shmonk.com")
-Description:Provides access to the complete Pali Canon, or 
+Description: Provides access to the complete Pali Canon, or 
     Tipitaka, the canonical scripture for Theravadin Buddhists 
     worldwide. 
 License: CC0
@@ -20,4 +20,9 @@ Imports:
     stringr,
     dplyr,
     magrittr,
-    stringi
+    stringi,
+    cpp11
+LinkingTo: 
+    cpp11
+SystemRequirements: 
+    C++11
