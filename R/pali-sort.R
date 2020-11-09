@@ -16,17 +16,14 @@ library(stringi)
 #                      "p", "ph", "b", "bh", "m",
 #                      "y", "r", "l", "v", "s", "h", "ḷ", "ṃ")
 
-pali_vowels <-
-  c("a", "\u0101", "i", "\u012b", "u", "\u016b", "e", "o")
-pali_consonants <-
-  c("k", "kh", "g", "gh", "\u1e45",
+pali_alphabet <-
+  c("a", "\u0101", "i", "\u012b", "u", "\u016b", "e", "o",
+    "k", "kh", "g", "gh", "\u1e45",
     "c", "ch", "j", "jh", "\u00f1",
     "\u1e6d", "\u1e6dh", "\u1e0d", "\u1e0dh", "\u1e47",
     "t", "th", "d", "dh", "n",
     "p", "ph", "b", "bh", "m",
     "y", "r", "l", "v", "s", "h", "\u1e37", "\u1e43")
-
-pali_alphabet <- c(pali_vowels, pali_consonants)
 
 # This is just an internal helper function to break Pali words
 # into a vector of letters, respecting the fact that 'dh',
@@ -36,7 +33,7 @@ explode <- function(pali_word) {
     return(stringr::str_sub(pali_word, 1, 1))
   }
   else if ((stringr::str_sub(pali_word, 2, 2) == "h") &
-           (stringr::str_sub(pali_word, 1, 2) %in% pali_consonants)) {
+           (stringr::str_sub(pali_word, 1, 2) %in% pali_alphabet)) {
     return(c(stringr::str_sub(pali_word, 1, 2),
              explode(stringr::str_sub(pali_word, 3))))
   }
