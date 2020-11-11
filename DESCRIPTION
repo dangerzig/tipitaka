@@ -1,7 +1,7 @@
 Package: tipitaka
 Type: Package
 Title: A Package for Analyzing the Pali Canon
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     person(given = "Dan",
            family = "Zigmond",

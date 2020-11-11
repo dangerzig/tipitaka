@@ -68,8 +68,9 @@ bool is_letter(std::string c) {
 //   1. Pali alphabetical order is different than standard C character order.
 //   2. UTF-8 characters can be more than one byte.
 //   3. Pali letters like "dh" and "th" have to be treated as one character.
+
 [[cpp11::register]]
-bool pali_lt(const std::string word1, const std::string word2) {
+bool c_pali_lt(const std::string word1, const std::string word2) {
 
    // Total bytes in each word
    const auto word1_total_bytes = word1.size();
@@ -131,7 +132,6 @@ bool pali_lt(const std::string word1, const std::string word2) {
       // Otherwise, increment the byte counts and repeat.
       word1_byte_count = word1_next_byte_count;
       word2_byte_count = word2_next_byte_count;
-
       }
 
       // If we get all the way through the above while loop,
@@ -144,10 +144,12 @@ bool pali_lt(const std::string word1, const std::string word2) {
          return false;
    }
 
+
 // Sort vector of words into Pali alphabetical order.
+
 [[cpp11::register]]
 std::vector<std::string> c_pali_sort(std::vector<std::string> words) {
-   std::sort(words.begin(), words.end(), pali_lt);
+   std::sort(words.begin(), words.end(), c_pali_lt);
    return(words);
 }
 

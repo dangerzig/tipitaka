@@ -26,9 +26,9 @@ pali_consonants <-
     "t", "th", "d", "dh", "n",
     "p", "ph", "b", "bh", "m",
     "y", "r", "l", "v", "s", "h", "\u1e37", "\u1e43")
-pali_alphabet <-c(pali_vowels, pali_consonants)
+pali_alphabet <- c(pali_vowels, pali_consonants)
 
-
+setwd("data-raw/")
 # Now we load the Tiptaka itself
 raw_files <- list.files(pattern = "*\\.mul\\.txt$")
 tipitaka_raw <- map_df(raw_files, ~ tibble(text = read_file(.x)) %>%
