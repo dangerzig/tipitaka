@@ -1,3 +1,7 @@
+# tipitaka 0.1.1
+
+* `pali_sort` is now written in C++ and is about 400-500x faster than the  previous R version.
+
 # tipitaka 0.1.0
 
 * Added a `NEWS.md` file to track changes to the package.
