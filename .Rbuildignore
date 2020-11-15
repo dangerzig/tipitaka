@@ -3,7 +3,8 @@
 ^data-raw$
 ^cran-comments.md$
 ^paper.md$
-^references.md$
+^references.bib$
 ^README\.Rmd$
 ^CRAN-RELEASE$
 ^ignore$
+^docs
