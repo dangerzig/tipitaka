@@ -21,6 +21,7 @@
 #' data and tools to facilitate the analysis of these ancient
 #' Pali texts.
 #'
+#'
 #' @section Data:
 #' Several data sets are included:
 #' \itemize{
@@ -48,6 +49,7 @@
 #'
 #' @docType package
 #' @name tipitaka
+#' @useDynLib tipitaka
 NULL
 
 
