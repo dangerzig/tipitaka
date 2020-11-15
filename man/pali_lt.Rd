@@ -18,4 +18,5 @@ TRUE if word1 comes before word2 alphabetically
 Note that all Pali string comparisons are case-insensitive.
 Also non-Pali characters are placed at the end of the
 alphabet and are considered equivalent to each other.
+This has been implemented in C++ for speed.
 }
