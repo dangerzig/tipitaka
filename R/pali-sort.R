@@ -48,6 +48,7 @@ explode <- function(pali_word) {
 #' Note that all Pali string comparisons are case-insensitive.
 #' Also non-Pali characters are placed at the end of the
 #' alphabet and are considered equivalent to each other.
+#' This has been implemented in C++ for speed.
 #'
 #' @param word1 A first Pali word as a string
 #' @param word2 A second Pali words as a string
@@ -57,6 +58,7 @@ pali_lt <- function(word1, word2) {
   return(c_pali_lt(word1, word2))
 }
 
+# This is the original R version of pali_lt for reference:
 #pali_lt <- function(word1, word2) {
 #  temp1 <- explode(tolower(word1))
 #  temp2 <- explode(tolower(word2))
@@ -113,11 +115,8 @@ pali_gt <- function(word1, word2) {
 #' Note that all Pali string comparisons are case-insensitive.
 #' This algorithm is based on Quicksort, but creates lots of
 #' intermediate data structures instead of doing swaps in place.
-#' It is MUCH slower than the built-in sort, but respects Pali
-#' alphabetical order. (It takes about 60 seconds to sort 10,000
-#' random Pali words on my Mac; sort takes less than 1 sec!)
-#' (This is no longer exported because there's a faster C version.)
-
+#' This has been implemented in C++ as the original R version
+#' was about 500x slower.
 #'
 #' @param word_list A vector of Pali words
 #' @return A new vector of Pali words in Pali alphabetical order
@@ -125,18 +124,17 @@ pali_gt <- function(word1, word2) {
 #'
 #' @examples
 #' # Every unique word of of the Mahāsatipatthāna Sutta in
-#' # Pali alphabetical order -- warning, can be slow!
-#' \donttest{
+#' # Pali alphabetical order:
 #' pali_sort(sati_sutta_long$word)
-#' }
 #'
-#' # A sorted list of 100 random words from the Tiptaka
+#' # A sorted list of 100 random words from the Tiptaka:
 #' library(dplyr)
 #' pali_sort(sample(tipitaka_long$word, 100))
 pali_sort <- function(word_list) {
   c_pali_sort(word_list)
 }
 
+# This is the original R version of pali_sort for reference:
 #pali_sort <- function(word_list) {
 #  if (length(word_list) <= 1)
 #    return(word_list)
