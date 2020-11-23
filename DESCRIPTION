@@ -7,9 +7,9 @@ Authors@R:
            family = "Zigmond",
            role = c("aut", "cre"),
            email = "djz@shmonk.com")
-Description: Provides access to the complete Pali Canon, or 
+Description: Provides access to the complete Pali Canon, or
     Tipitaka, the canonical scripture for Theravadin Buddhists 
-    worldwide. Based on the Chattha Sangayana Tipitaka version 
+    worldwide. Based on the Chattha Sangayana Tipitaka version
     4 (Vipassana Research Institute, 1990).
 License: CC0
 Encoding: UTF-8
