@@ -1,3 +1,7 @@
+# tipitaka 0.1.2
+
+* Added 'LazyDataCompression: xz' to DESCRIPTION as requested to save space
+
 # tipitaka 0.1.1
 
 * `pali_sort` is now written in C++ and is about 400-500x faster than the  previous R version.
