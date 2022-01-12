@@ -1,6 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^data-raw$
+^vri-raw$
 ^cran-comments.md$
 ^paper.md$
 ^references.bib$
