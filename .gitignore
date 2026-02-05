@@ -3,3 +3,4 @@
 .RData
 .Ruserdata
 ignore/*
+data-raw/critical/*.csv

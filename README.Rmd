@@ -18,21 +18,39 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of tipitaka is to allow students and researchers to apply the tools of computational linguistics to the ancient Buddhist texts known as the Tipitaka or Pali Canon. 
+The goal of tipitaka is to allow students and researchers to apply the tools of computational linguistics to the ancient Buddhist texts known as the Tipitaka or Pali Canon.
 
 The Tipitaka is the canonical scripture of Theravadin Buddhists worldwide. It purports to record the direct teachings of the historical Buddha. It was first recorded in written form in what is now Sri Lanka, likely around 100 BCE.
 
-The tipitaka package primarily consists of the texts of the Tipitaka in various electronic forms, plus a few simple functions and data structures for working with the Pali language. 
+The tipitaka package provides the texts of the Tipitaka in various electronic forms, plus functions for working with the Pali language.
 
-The version of the Tipitaka included here is based on what's known as the Chattha Sangāyana Tipiṭaka version 4.0 (aka, CST4) published by the Vipassana Research Institute and received from them in April 2020. I have made a few edits to the CST4 files in creating this package:
+## What's New in Version 1.0
 
-* Where volumes were split across multiple files, they are here are combined as a single volume
+Version 1.0 adds a **critical edition** of the Sutta Pitaka with two major improvements:
 
-* Where volume numbering was inconsistent with the widely-used Pali Text Society (PTS) scheme, I have tried to conform with PTS.
+* **Lemmatization**: Words are grouped by dictionary headword using the [Digital Pali Dictionary](https://digitalpalidictionary.github.io/). For example, "buddhassa", "buddho", and "buddhaṃ" are all counted under "buddha". This enables much more meaningful text analysis.
 
-* A very few typos that were found while processing have been corrected.
+* **Sutta-level granularity**: Word frequencies are available for each individual sutta (~5,700 suttas), not just by volume. This allows fine-grained comparison of texts.
 
-There is no universal script for Pali; traditionally each Buddhist country ususes its own script to write Pali phonetically. This package uses the Roman script and the diacritical system developed by the PTS. However, note that the Pali alphabet does NOT follow the alphabetical ordering of English or other Roman-script languages. For this reason, tipitaka includes `pali_alphabet` giving the full Pali alphabet in order, and the functions, `pali_lt`, `pali_gt`, `pali_eq`, and `pali_sort` for comparing and sorting Pali strings.
+The critical edition is based on the Pali Text Society edition with ~500 corrections identified by comparing the SuttaCentral and VRI witnesses.
+
+## Data Sources
+
+The package includes two data sources:
+
+**VRI Edition** (original datasets): The complete Tipitaka from the Chattha Sangāyana Tipiṭaka version 4.0 (CST4) published by the Vipassana Research Institute. This covers all three pitakas (Vinaya, Sutta, and Abhidhamma).
+
+* `tipitaka_raw`, `tipitaka_long`, `tipitaka_wide` - Full canon, volume-level
+
+**Critical Edition** (new in v1.0): A lemmatized critical edition of the Sutta Pitaka only.
+
+* `tipitaka_long_critical`, `tipitaka_wide_critical` - Lemma frequencies by nikaya
+* `tipitaka_suttas_long`, `tipitaka_suttas_wide` - Lemma frequencies by sutta
+* `tipitaka_long_words` - Surface forms (non-lemmatized) for comparison
+
+## Pali Alphabet
+
+There is no universal script for Pali; traditionally each Buddhist country uses its own script to write Pali phonetically. This package uses the Roman script and the diacritical system developed by the PTS. However, note that the Pali alphabet does NOT follow the alphabetical ordering of English or other Roman-script languages. For this reason, tipitaka includes `pali_alphabet` giving the full Pali alphabet in order, and the functions `pali_lt`, `pali_gt`, `pali_eq`, and `pali_sort` for comparing and sorting Pali strings.
 
 ## Installation
 
@@ -85,8 +103,8 @@ freq_by_rank <- tipitaka_long %>%
   add_count(wt = n, name = "word_total") %>%
   ungroup() %>%
   distinct(word, .keep_all = TRUE) %>%
-  mutate(tipitaka_total =  
-           sum(distinct(tipitaka_long, book, 
+  mutate(tipitaka_total =
+           sum(distinct(tipitaka_long, book,
                         .keep_all = TRUE)$total)) %>%
     transform(freq = word_total/tipitaka_total) %>%
   arrange(desc(freq)) %>%
@@ -98,5 +116,24 @@ freq_by_rank %>%
   geom_line(size = 1.1, alpha = 0.8, show.legend = FALSE) +
   scale_x_log10() +
   scale_y_log10()
+```
+
+## Lemmatized Analysis (New in v1.0)
+
+The lemmatized critical edition enables more meaningful clustering by grouping inflected forms:
+
+```{r dendogram-critical, message = FALSE, warning = FALSE}
+# Cluster the five nikayas using lemmatized data
+dist_critical <- dist(tipitaka_wide_critical)
+hc_critical <- hclust(dist_critical)
+plot(hc_critical, main = "Nikaya Clustering (Lemmatized)")
+```
+
+You can search for specific lemmas across all suttas:
+
+```{r search-lemma, message = FALSE, warning = FALSE}
+# Find suttas that mention "nibbana" most frequently
+nibbana <- search_lemma("nibbana")
+head(nibbana[, c("sutta", "nikaya", "n", "freq")], 10)
 ```
 

@@ -13,38 +13,47 @@
 #'
 #' The package tipitaka provides access to the complete Pali
 #' Canon, or Tipitaka, from R. The Tipitaka is the canonical
-#' scripture for Therevadin Buddhists worldwide. This version
-#' is largely taken from the Chattha Sangāyana Tipitaka
-#' version 4.0 com;iled by the Vispassana Research Institute,
-#' although edits have been made to conform to the numbering
-#' used by the Pali Text Society. This package provides both
-#' data and tools to facilitate the analysis of these ancient
-#' Pali texts.
+#' scripture for Therevadin Buddhists worldwide. This package
+#' includes both the original VRI (Vipassana Research Institute)
+#' data and a new critical edition based on PTS with corrections.
+#' The critical edition includes lemmatization (grouping inflected
+#' forms by dictionary headword) and sutta-level granularity.
 #'
-#'
-#' @section Data:
-#' Several data sets are included:
+#' @section VRI Data (Original):
+#' The original datasets from the Chattha Sangayana Tipitaka:
 #' \itemize{
-#'   \item tipitaka_raw: the complete text of the Tipitaka
-#'   \item tipitaka_long: the complete Tipitaka in "long" form
-#'   \item tipitaka_wide: the complete Tipitaka in "wide" form
+#'   \item tipitaka_raw: the complete text of the Tipitaka (VRI)
+#'   \item tipitaka_long: the complete Tipitaka in "long" form (VRI)
+#'   \item tipitaka_wide: the complete Tipitaka in "wide" form (VRI)
 #'   \item tipitaka_names: the names of each book of the Tipitaka
 #'   \item sutta_pitaka: the names of each volume of the Sutta Pitaka
 #'   \item vinaya_pitaka: the names of each volume of the Vinaya Pitaka
-#'   \item abhidhamma_pitaka: the names of each volume of the Abhidhamma Pitak
-#'   \item sati_sutta_raw: the Mahāsatipatthāna Sutta text
-#'   \item sati_sutta_long: the Mahāsatipatthāna Sutta in "long" form
-#'   \item pali_alphabet: the complete pali alphabet in traditional order
+#'   \item abhidhamma_pitaka: the names of each volume of the Abhidhamma Pitaka
+#'   \item sati_sutta_raw: the Mahasatipatthana Sutta text
+#'   \item sati_sutta_long: the Mahasatipatthana Sutta in "long" form
+#'   \item pali_alphabet: the complete Pali alphabet in traditional order
 #'   \item pali_stop_words: a set of "stop words" for Pali
-#'   }
+#' }
+#'
+#' @section Critical Edition Data (New):
+#' Lemmatized data from the critical edition (Sutta Pitaka only):
+#' \itemize{
+#'   \item tipitaka_long_critical: lemma frequencies by nikaya
+#'   \item tipitaka_wide_critical: lemma x nikaya frequency matrix
+#'   \item tipitaka_raw_critical: full text per nikaya
+#'   \item tipitaka_long_words: surface form frequencies by nikaya
+#'   \item tipitaka_suttas_long: lemma frequencies by sutta
+#'   \item tipitaka_suttas_wide: lemma x sutta frequency matrix
+#' }
 #'
 #' @section Tools:
-#' A few useful functions are provided for working with Pali text:
+#' Functions for working with Pali text:
 #' \itemize{
 #'   \item pali_lt: less-than function for Pali strings
-#'   \item pali-gt: greater-than function for Pali strings
-#'   \item pali-eq: equals function for Pali strings
-#'   \item pali-sort: sorting function for vectors of pali strings
+#'   \item pali_gt: greater-than function for Pali strings
+#'   \item pali_eq: equals function for Pali strings
+#'   \item pali_sort: sorting function for vectors of Pali strings
+#'   \item search_lemma: search for lemma occurrences across suttas
 #' }
 #'
 #' @docType package
@@ -240,4 +249,140 @@ NULL
 #' match("b", pali_alphabet) < match("c", pali_alphabet)
 #'
 "pali_alphabet"
+
+
+# =============================================================================
+# Critical Edition Datasets
+# =============================================================================
+
+#' Critical Edition Lemma Frequencies (Long Format)
+#'
+#' Lemma frequencies from the critical edition of the Pali Canon (Sutta Pitaka).
+#' Uses lemmatization from Digital Pali Dictionary to group inflected forms
+#' by dictionary headword (e.g., "buddhassa", "buddho" -> "buddha").
+#'
+#' @format A data frame with columns:
+#' \describe{
+#'   \item{word}{Lemma (dictionary headword)}
+#'   \item{n}{Count of this lemma in this nikaya}
+#'   \item{total}{Total lemmas in this nikaya}
+#'   \item{freq}{Frequency (n/total)}
+#'   \item{book}{Nikaya abbreviation (dn, mn, sn, an, kn)}
+#' }
+#'
+#' @source Critical edition based on PTS with corrections from SC/VRI comparison.
+#'   Generated using the pali-canon Python library.
+#'
+#' @examples
+#' # Find most common lemmas in Digha Nikaya
+#' dn_lemmas <- tipitaka_long_critical[tipitaka_long_critical$book == "dn", ]
+#' head(dn_lemmas[order(-dn_lemmas$freq), ])
+#'
+"tipitaka_long_critical"
+
+
+#' Critical Edition Word Frequencies (Surface Forms)
+#'
+#' Surface form (non-lemmatized) word frequencies from the critical edition.
+#' Useful for comparing with lemmatized data or for analyses where
+#' inflected forms should be kept separate.
+#'
+#' @format A data frame with columns:
+#' \describe{
+#'   \item{word}{Surface form (as appears in text)}
+#'   \item{n}{Count of this word in this nikaya}
+#'   \item{total}{Total words in this nikaya}
+#'   \item{freq}{Frequency (n/total)}
+#'   \item{book}{Nikaya abbreviation (dn, mn, sn, an, kn)}
+#' }
+#'
+#' @source Critical edition based on PTS with corrections from SC/VRI comparison.
+#'
+"tipitaka_long_words"
+
+
+#' Critical Edition Frequency Matrix (Wide Format)
+#'
+#' Lemma x nikaya frequency matrix from the critical edition.
+#' Each row is a nikaya, each column is a lemma, and values are frequencies.
+#' Useful for clustering, PCA, and other multivariate analyses.
+#'
+#' @format A data frame with nikayas as row names and lemmas as columns.
+#'   Values are word frequencies (proportions).
+#'
+#' @source Critical edition based on PTS with corrections from SC/VRI comparison.
+#'
+#' @examples
+#' # Hierarchical clustering of nikayas based on vocabulary
+#' dist_m <- dist(tipitaka_wide_critical)
+#' hc <- hclust(dist_m)
+#' plot(hc, main = "Nikaya Clustering by Vocabulary")
+#'
+"tipitaka_wide_critical"
+
+
+#' Critical Edition Raw Text
+#'
+#' Full text of each nikaya from the critical edition.
+#'
+#' @format A data frame with columns:
+#' \describe{
+#'   \item{book}{Nikaya abbreviation (dn, mn, sn, an, kn)}
+#'   \item{book_name}{Full nikaya name}
+#'   \item{text}{Complete text of the nikaya}
+#' }
+#'
+#' @source Critical edition based on PTS with corrections from SC/VRI comparison.
+#'
+"tipitaka_raw_critical"
+
+
+#' Sutta-Level Lemma Frequencies
+#'
+#' Lemma frequencies at sutta granularity for detailed analysis.
+#' Allows analysis of individual suttas rather than entire nikayas.
+#'
+#' @format A data frame with columns:
+#' \describe{
+#'   \item{word}{Lemma (dictionary headword)}
+#'   \item{n}{Count of this lemma in this sutta}
+#'   \item{total}{Total lemmas in this sutta}
+#'   \item{freq}{Frequency (n/total)}
+#'   \item{sutta}{Sutta ID (e.g., "dn1", "mn1", "sn1.1")}
+#'   \item{nikaya}{Nikaya abbreviation (dn, mn, sn, an, kn)}
+#' }
+#'
+#' @source Critical edition based on PTS with corrections from SC/VRI comparison.
+#'
+#' @examples
+#' # Find all suttas containing the lemma "nibbana"
+#' nibbana <- tipitaka_suttas_long[tipitaka_suttas_long$word == "nibbana", ]
+#' head(nibbana[order(-nibbana$freq), ])
+#'
+#' # Or use the search_lemma() function:
+#' # search_lemma("nibbana")
+#'
+"tipitaka_suttas_long"
+
+
+#' Sutta-Level Frequency Matrix (Wide Format)
+#'
+#' Lemma x sutta frequency matrix for detailed multivariate analysis.
+#' Each row is a sutta, each column is a lemma, and values are frequencies.
+#'
+#' @format A data frame with sutta IDs as row names and lemmas as columns.
+#'   Values are word frequencies (proportions).
+#'
+#' @source Critical edition based on PTS with corrections from SC/VRI comparison.
+#'
+#' @note This dataset is large (~5,765 suttas x ~11,410 lemmas).
+#'
+#' @examples
+#' # Cluster suttas from Digha Nikaya
+#' dn_suttas <- tipitaka_suttas_wide[grep("^dn", rownames(tipitaka_suttas_wide)), ]
+#' dist_m <- dist(dn_suttas)
+#' hc <- hclust(dist_m)
+#' plot(hc, main = "DN Sutta Clustering")
+#'
+"tipitaka_suttas_wide"
 
