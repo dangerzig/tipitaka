@@ -1,16 +1,18 @@
 Package: tipitaka
 Type: Package
 Title: Data and Tools for Analyzing the Pali Canon
-Version: 0.1.2
-Authors@R: 
+Version: 1.0.0
+Authors@R:
     person(given = "Dan",
            family = "Zigmond",
            role = c("aut", "cre"),
            email = "djz@shmonk.com")
 Description: Provides access to the complete Pali Canon, or
-    Tipitaka, the canonical scripture for Theravadin Buddhists 
-    worldwide. Based on the Chattha Sangayana Tipitaka version
-    4 (Vipassana Research Institute, 1990).
+    Tipitaka, the canonical scripture for Theravadin Buddhists
+    worldwide. Includes both the Chattha Sangayana Tipitaka
+    (Vipassana Research Institute, 1990) and a critical edition
+    of the Sutta Pitaka with lemmatization and sutta-level
+    granularity based on the Digital Pali Dictionary.
 License: CC0
 Encoding: UTF-8
 LazyData: true
@@ -24,8 +26,5 @@ Imports:
     magrittr,
     stringi,
     cpp11
-LinkingTo: 
+LinkingTo:
     cpp11
-SystemRequirements: 
-    C++14
-    
