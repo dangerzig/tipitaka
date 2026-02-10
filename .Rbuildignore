@@ -10,3 +10,5 @@
 ^ignore$
 ^docs
 ^CRAN-SUBMISSION$
+^\.claude$
+^\.github$
