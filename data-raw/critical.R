@@ -60,6 +60,15 @@ tipitaka_raw_critical$text <- as.character(tipitaka_raw_critical$text)
 # Load sutta-level data
 # ------------------------------------------------------------------------------
 
+# tipitaka_suttas_raw: Full text per sutta
+tipitaka_suttas_raw <- read.csv(
+  "data-raw/critical/tipitaka_suttas_raw.csv",
+  stringsAsFactors = FALSE
+)
+tipitaka_suttas_raw$sutta <- as.character(tipitaka_suttas_raw$sutta)
+tipitaka_suttas_raw$nikaya <- as.character(tipitaka_suttas_raw$nikaya)
+tipitaka_suttas_raw$text <- as.character(tipitaka_suttas_raw$text)
+
 # tipitaka_suttas_long: Lemma frequencies at sutta granularity
 tipitaka_suttas_long <- read.csv(
   "data-raw/critical/tipitaka_suttas_long.csv",
@@ -103,6 +112,9 @@ use_data(tipitaka_wide_critical, overwrite = TRUE, compress = "xz")
 
 message("Saving tipitaka_raw_critical...")
 use_data(tipitaka_raw_critical, overwrite = TRUE, compress = "xz")
+
+message("Saving tipitaka_suttas_raw...")
+use_data(tipitaka_suttas_raw, overwrite = TRUE, compress = "xz")
 
 message("Saving tipitaka_suttas_long...")
 use_data(tipitaka_suttas_long, overwrite = TRUE, compress = "xz")

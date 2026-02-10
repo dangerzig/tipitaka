@@ -13,12 +13,13 @@ A data frame with columns:
 }
 }
 \source{
-Critical edition based on PTS with corrections from SC/VRI comparison.
+Critical edition based on PTS with corrections from five-witness
+  collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
 }
 \usage{
 tipitaka_raw_critical
 }
 \description{
-Full text of each nikaya from the critical edition.
+Full text of each nikaya from the critical edition of the Sutta Pitaka.
 }
 \keyword{datasets}

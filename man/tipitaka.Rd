@@ -8,11 +8,14 @@
 \description{
 The package tipitaka provides access to the complete Pali
 Canon, or Tipitaka, from R. The Tipitaka is the canonical
-scripture for Therevadin Buddhists worldwide. This package
+scripture for Theravadin Buddhists worldwide. This package
 includes both the original VRI (Vipassana Research Institute)
-data and a new critical edition based on PTS with corrections.
-The critical edition includes lemmatization (grouping inflected
-forms by dictionary headword) and sutta-level granularity.
+data and a critical edition of the Sutta Pitaka based on a
+five-witness collation of PTS (via GRETIL), SuttaCentral,
+VRI, Buddha Jayanti Tipitaka (BJT), and Thai Royal Edition.
+The critical edition includes lemmatization using the Digital
+Pali Dictionary (99.78\% token-level coverage) and
+sutta-level granularity.
 }
 \section{VRI Data (Original)}{
 
@@ -25,8 +28,6 @@ The original datasets from the Chattha Sangayana Tipitaka:
   \item sutta_pitaka: the names of each volume of the Sutta Pitaka
   \item vinaya_pitaka: the names of each volume of the Vinaya Pitaka
   \item abhidhamma_pitaka: the names of each volume of the Abhidhamma Pitaka
-  \item sati_sutta_raw: the Mahasatipatthana Sutta text
-  \item sati_sutta_long: the Mahasatipatthana Sutta in "long" form
   \item pali_alphabet: the complete Pali alphabet in traditional order
   \item pali_stop_words: a set of "stop words" for Pali
 }
@@ -40,6 +41,7 @@ Lemmatized data from the critical edition (Sutta Pitaka only):
   \item tipitaka_wide_critical: lemma x nikaya frequency matrix
   \item tipitaka_raw_critical: full text per nikaya
   \item tipitaka_long_words: surface form frequencies by nikaya
+  \item tipitaka_suttas_raw: full text per sutta
   \item tipitaka_suttas_long: lemma frequencies by sutta
   \item tipitaka_suttas_wide: lemma x sutta frequency matrix
 }

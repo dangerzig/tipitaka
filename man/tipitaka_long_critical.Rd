@@ -15,16 +15,20 @@ A data frame with columns:
 }
 }
 \source{
-Critical edition based on PTS with corrections from SC/VRI comparison.
-  Generated using the pali-canon Python library.
+Critical edition based on PTS with corrections from five-witness
+  collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
+  Generated using the pali-canon Python library
+  (\url{https://github.com/dangerzig/pali-canon}).
 }
 \usage{
 tipitaka_long_critical
 }
 \description{
-Lemma frequencies from the critical edition of the Pali Canon (Sutta Pitaka).
-Uses lemmatization from Digital Pali Dictionary to group inflected forms
-by dictionary headword (e.g., "buddhassa", "buddho" -> "buddha").
+Lemma frequencies from the critical edition of the Sutta Pitaka, based on
+a five-witness collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
+Uses lemmatization from the Digital Pali Dictionary (DPD) to group
+inflected forms by dictionary headword (e.g., "buddhassa", "buddho"
+-> "buddha"). Token-level coverage is 99.78\%.
 }
 \examples{
 # Find most common lemmas in Digha Nikaya

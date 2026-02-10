@@ -13,11 +13,14 @@
 #'
 #' The package tipitaka provides access to the complete Pali
 #' Canon, or Tipitaka, from R. The Tipitaka is the canonical
-#' scripture for Therevadin Buddhists worldwide. This package
+#' scripture for Theravadin Buddhists worldwide. This package
 #' includes both the original VRI (Vipassana Research Institute)
-#' data and a new critical edition based on PTS with corrections.
-#' The critical edition includes lemmatization (grouping inflected
-#' forms by dictionary headword) and sutta-level granularity.
+#' data and a critical edition of the Sutta Pitaka based on a
+#' five-witness collation of PTS (via GRETIL), SuttaCentral,
+#' VRI, Buddha Jayanti Tipitaka (BJT), and Thai Royal Edition.
+#' The critical edition includes lemmatization using the Digital
+#' Pali Dictionary (99.78\% token-level coverage) and
+#' sutta-level granularity.
 #'
 #' @section VRI Data (Original):
 #' The original datasets from the Chattha Sangayana Tipitaka:
@@ -29,8 +32,6 @@
 #'   \item sutta_pitaka: the names of each volume of the Sutta Pitaka
 #'   \item vinaya_pitaka: the names of each volume of the Vinaya Pitaka
 #'   \item abhidhamma_pitaka: the names of each volume of the Abhidhamma Pitaka
-#'   \item sati_sutta_raw: the Mahasatipatthana Sutta text
-#'   \item sati_sutta_long: the Mahasatipatthana Sutta in "long" form
 #'   \item pali_alphabet: the complete Pali alphabet in traditional order
 #'   \item pali_stop_words: a set of "stop words" for Pali
 #' }
@@ -42,6 +43,7 @@
 #'   \item tipitaka_wide_critical: lemma x nikaya frequency matrix
 #'   \item tipitaka_raw_critical: full text per nikaya
 #'   \item tipitaka_long_words: surface form frequencies by nikaya
+#'   \item tipitaka_suttas_raw: full text per sutta
 #'   \item tipitaka_suttas_long: lemma frequencies by sutta
 #'   \item tipitaka_suttas_wide: lemma x sutta frequency matrix
 #' }
@@ -208,40 +210,17 @@
 
 
 
-#' Mahāsatipatthāna Sutta in "long" form
-#'
-#' The Mahāsatipatthāna Sutta or Discourse on the Establishing
-#' of Mindfulness in "long" form.
-#'
-#' @source Vipassana Research Institute, CST4, April 2020
-"sati_sutta_long"
-
-#' Mahāsatipatthāna Sutta text in raw form
-#'
-#' The unprocessed text of the Mahāsatipatthāna Sutta
-#'
-#' @format A tibble with the variable:
-#' \describe{
-#' \item{text}{Complete text}
-#' }
-#'
-#' @source Vipassana Research Institute, CST4, April 2020
-"sati_sutta_raw"
-
-
 #' Tentative set of "stop words" for Pali
 #'
 #' A list of all declinables and particles from the PTS
 #' Pali-English Dictionary.
 #'
 #' @examples
-#' \donttest{
-#' # Find most common words in the Mahasatipatthana Sutta excluding stop words
-#' library(dplyr)
-#' sati_sutta_long %>%
-#'   anti_join(pali_stop_words, by = "word") %>%
-#'   arrange(desc(freq))
-#' }
+#' # Extract lemma frequencies for the Mahasatipatthana Sutta (DN 22)
+#' dn22 <- tipitaka_suttas_long[tipitaka_suttas_long$sutta == "dn22", ]
+#' # Remove stop words
+#' dn22_content <- dn22[!dn22$word %in% pali_stop_words$word, ]
+#' head(dn22_content[order(-dn22_content$freq), ])
 #'
 #' @source \url{https://dsalsrv04.uchicago.edu/dictionaries/pali/}
 "pali_stop_words"
@@ -266,9 +245,11 @@
 
 #' Critical Edition Lemma Frequencies (Long Format)
 #'
-#' Lemma frequencies from the critical edition of the Pali Canon (Sutta Pitaka).
-#' Uses lemmatization from Digital Pali Dictionary to group inflected forms
-#' by dictionary headword (e.g., "buddhassa", "buddho" -> "buddha").
+#' Lemma frequencies from the critical edition of the Sutta Pitaka, based on
+#' a five-witness collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
+#' Uses lemmatization from the Digital Pali Dictionary (DPD) to group
+#' inflected forms by dictionary headword (e.g., "buddhassa", "buddho"
+#' -> "buddha"). Token-level coverage is 99.78\%.
 #'
 #' @format A data frame with columns:
 #' \describe{
@@ -279,8 +260,10 @@
 #'   \item{book}{Nikaya abbreviation (dn, mn, sn, an, kn)}
 #' }
 #'
-#' @source Critical edition based on PTS with corrections from SC/VRI comparison.
-#'   Generated using the pali-canon Python library.
+#' @source Critical edition based on PTS with corrections from five-witness
+#'   collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
+#'   Generated using the pali-canon Python library
+#'   (\url{https://github.com/dangerzig/pali-canon}).
 #'
 #' @examples
 #' # Find most common lemmas in Digha Nikaya
@@ -292,9 +275,9 @@
 
 #' Critical Edition Word Frequencies (Surface Forms)
 #'
-#' Surface form (non-lemmatized) word frequencies from the critical edition.
-#' Useful for comparing with lemmatized data or for analyses where
-#' inflected forms should be kept separate.
+#' Surface form (non-lemmatized) word frequencies from the critical edition
+#' of the Sutta Pitaka. Useful for comparing with lemmatized data or for
+#' analyses where inflected forms should be kept separate.
 #'
 #' @format A data frame with columns:
 #' \describe{
@@ -305,21 +288,24 @@
 #'   \item{book}{Nikaya abbreviation (dn, mn, sn, an, kn)}
 #' }
 #'
-#' @source Critical edition based on PTS with corrections from SC/VRI comparison.
+#' @source Critical edition based on PTS with corrections from five-witness
+#'   collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
 #'
 "tipitaka_long_words"
 
 
 #' Critical Edition Frequency Matrix (Wide Format)
 #'
-#' Lemma x nikaya frequency matrix from the critical edition.
+#' Lemma x nikaya frequency matrix from the critical edition of the
+#' Sutta Pitaka.
 #' Each row is a nikaya, each column is a lemma, and values are frequencies.
 #' Useful for clustering, PCA, and other multivariate analyses.
 #'
 #' @format A data frame with nikayas as row names and lemmas as columns.
 #'   Values are word frequencies (proportions).
 #'
-#' @source Critical edition based on PTS with corrections from SC/VRI comparison.
+#' @source Critical edition based on PTS with corrections from five-witness
+#'   collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
 #'
 #' @examples
 #' # Hierarchical clustering of nikayas based on vocabulary
@@ -332,7 +318,7 @@
 
 #' Critical Edition Raw Text
 #'
-#' Full text of each nikaya from the critical edition.
+#' Full text of each nikaya from the critical edition of the Sutta Pitaka.
 #'
 #' @format A data frame with columns:
 #' \describe{
@@ -341,9 +327,36 @@
 #'   \item{text}{Complete text of the nikaya}
 #' }
 #'
-#' @source Critical edition based on PTS with corrections from SC/VRI comparison.
+#' @source Critical edition based on PTS with corrections from five-witness
+#'   collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
 #'
 "tipitaka_raw_critical"
+
+
+#' Sutta-Level Raw Text
+#'
+#' Full text of each individual sutta from the critical edition of the
+#' Sutta Pitaka. Allows retrieval of the complete Pali text for any sutta.
+#'
+#' @format A data frame with columns:
+#' \describe{
+#'   \item{sutta}{Sutta ID (e.g., "dn1", "mn1", "sn1.1")}
+#'   \item{nikaya}{Nikaya abbreviation (dn, mn, sn, an, kn)}
+#'   \item{text}{Complete Pali text of the sutta}
+#' }
+#'
+#' @source Critical edition based on PTS with corrections from five-witness
+#'   collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
+#'
+#' @examples
+#' # Get the text of the Mahasatipatthana Sutta (DN 22)
+#' dn22_text <- tipitaka_suttas_raw[tipitaka_suttas_raw$sutta == "dn22", "text"]
+#' nchar(dn22_text)
+#'
+#' # Count suttas per nikaya
+#' table(tipitaka_suttas_raw$nikaya)
+#'
+"tipitaka_suttas_raw"
 
 
 #' Sutta-Level Lemma Frequencies
@@ -361,7 +374,8 @@
 #'   \item{nikaya}{Nikaya abbreviation (dn, mn, sn, an, kn)}
 #' }
 #'
-#' @source Critical edition based on PTS with corrections from SC/VRI comparison.
+#' @source Critical edition based on PTS with corrections from five-witness
+#'   collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
 #'
 #' @examples
 #' # Find all suttas containing the lemma "nibbana"
@@ -387,7 +401,8 @@
 #'   sutta IDs as row names and lemma headwords as column names.
 #'   Values are word frequencies (proportions).
 #'
-#' @source Critical edition based on PTS with corrections from SC/VRI comparison.
+#' @source Critical edition based on PTS with corrections from five-witness
+#'   collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
 #'
 #' @note To convert to a dense matrix, use \code{as.matrix(tipitaka_suttas_wide)}.
 #'   Caution: the dense matrix requires ~500MB of memory.

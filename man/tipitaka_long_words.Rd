@@ -15,14 +15,15 @@ A data frame with columns:
 }
 }
 \source{
-Critical edition based on PTS with corrections from SC/VRI comparison.
+Critical edition based on PTS with corrections from five-witness
+  collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
 }
 \usage{
 tipitaka_long_words
 }
 \description{
-Surface form (non-lemmatized) word frequencies from the critical edition.
-Useful for comparing with lemmatized data or for analyses where
-inflected forms should be kept separate.
+Surface form (non-lemmatized) word frequencies from the critical edition
+of the Sutta Pitaka. Useful for comparing with lemmatized data or for
+analyses where inflected forms should be kept separate.
 }
 \keyword{datasets}
