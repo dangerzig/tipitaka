@@ -20,9 +20,11 @@ the Sutta Pitaka. These are easier to read if you call
 \code{stringi::stri_unescape_unicode} first.
 }
 \examples{
-# Clean up the Unicode characters to make things more readble:
+\donttest{
+# Clean up the Unicode characters to make things more readable:
 sutta_pitaka$name <-
   stringi::stri_unescape_unicode(sutta_pitaka$name)
+}
 # Count all the words in the Suttas:
 sum(
   unique(

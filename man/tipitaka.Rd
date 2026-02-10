@@ -2,45 +2,62 @@
 % Please edit documentation in R/tipitaka-docs.R
 \docType{package}
 \name{tipitaka}
+\alias{tipitaka-package}
 \alias{tipitaka}
 \title{tipitaka: A package for exploring the Pali Canon in R.}
 \description{
 The package tipitaka provides access to the complete Pali
 Canon, or Tipitaka, from R. The Tipitaka is the canonical
-scripture for Therevadin Buddhists worldwide. This version
-is largely taken from the Chattha Sangāyana Tipitaka
-version 4.0 com;iled by the Vispassana Research Institute,
-although edits have been made to conform to the numbering
-used by the Pali Text Society. This package provides both
-data and tools to facilitate the analysis of these ancient
-Pali texts.
+scripture for Therevadin Buddhists worldwide. This package
+includes both the original VRI (Vipassana Research Institute)
+data and a new critical edition based on PTS with corrections.
+The critical edition includes lemmatization (grouping inflected
+forms by dictionary headword) and sutta-level granularity.
 }
-\section{Data}{
+\section{VRI Data (Original)}{
 
-Several data sets are included:
+The original datasets from the Chattha Sangayana Tipitaka:
 \itemize{
-  \item tipitaka_raw: the complete text of the Tipitaka
-  \item tipitaka_long: the complete Tipitaka in "long" form
-  \item tipitaka_wide: the complete Tipitaka in "wide" form
+  \item tipitaka_raw: the complete text of the Tipitaka (VRI)
+  \item tipitaka_long: the complete Tipitaka in "long" form (VRI)
+  \item tipitaka_wide: the complete Tipitaka in "wide" form (VRI)
   \item tipitaka_names: the names of each book of the Tipitaka
   \item sutta_pitaka: the names of each volume of the Sutta Pitaka
   \item vinaya_pitaka: the names of each volume of the Vinaya Pitaka
-  \item abhidhamma_pitaka: the names of each volume of the Abhidhamma Pitak
-  \item sati_sutta_raw: the Mahāsatipatthāna Sutta text
-  \item sati_sutta_long: the Mahāsatipatthāna Sutta in "long" form
-  \item pali_alphabet: the complete pali alphabet in traditional order
+  \item abhidhamma_pitaka: the names of each volume of the Abhidhamma Pitaka
+  \item sati_sutta_raw: the Mahasatipatthana Sutta text
+  \item sati_sutta_long: the Mahasatipatthana Sutta in "long" form
+  \item pali_alphabet: the complete Pali alphabet in traditional order
   \item pali_stop_words: a set of "stop words" for Pali
-  }
+}
+}
+
+\section{Critical Edition Data (New)}{
+
+Lemmatized data from the critical edition (Sutta Pitaka only):
+\itemize{
+  \item tipitaka_long_critical: lemma frequencies by nikaya
+  \item tipitaka_wide_critical: lemma x nikaya frequency matrix
+  \item tipitaka_raw_critical: full text per nikaya
+  \item tipitaka_long_words: surface form frequencies by nikaya
+  \item tipitaka_suttas_long: lemma frequencies by sutta
+  \item tipitaka_suttas_wide: lemma x sutta frequency matrix
+}
 }
 
 \section{Tools}{
 
-A few useful functions are provided for working with Pali text:
+Functions for working with Pali text:
 \itemize{
   \item pali_lt: less-than function for Pali strings
-  \item pali-gt: greater-than function for Pali strings
-  \item pali-eq: equals function for Pali strings
-  \item pali-sort: sorting function for vectors of pali strings
+  \item pali_gt: greater-than function for Pali strings
+  \item pali_eq: equals function for Pali strings
+  \item pali_sort: sorting function for vectors of Pali strings
+  \item search_lemma: search for lemma occurrences across suttas
 }
 }
 
+\author{
+\strong{Maintainer}: Dan Zigmond \email{djz@shmonk.com}
+
+}

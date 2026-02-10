@@ -24,7 +24,6 @@ was about 500x slower.
 # Pali alphabetical order:
 pali_sort(sati_sutta_long$word)
 
-# A sorted list of 100 random words from the Tiptaka:
-library(dplyr)
+# A sorted list of 100 random words from the Tipitaka:
 pali_sort(sample(tipitaka_long$word, 100))
 }

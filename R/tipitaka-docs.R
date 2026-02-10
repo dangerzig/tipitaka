@@ -56,10 +56,9 @@
 #'   \item search_lemma: search for lemma occurrences across suttas
 #' }
 #'
-#' @docType package
 #' @name tipitaka
-#' @useDynLib tipitaka
-NULL
+#' @useDynLib tipitaka, .registration = TRUE
+"_PACKAGE"
 
 
 #' Tipitaka text in raw form
@@ -115,9 +114,11 @@ NULL
 #' }
 #'
 #' @examples
-#' # Clean up the Unicode characters to make things more readble:
+#' \donttest{
+#' # Clean up the Unicode characters to make things more readable:
 #' tipitaka_names$name <-
 #'   stringi::stri_unescape_unicode(tipitaka_names$name)
+#' }
 #'
 "tipitaka_names"
 
@@ -135,9 +136,11 @@ NULL
 #' }
 #'
 #' @examples
-#' # Clean up the Unicode characters to make things more readble:
+#' \donttest{
+#' # Clean up the Unicode characters to make things more readable:
 #' sutta_pitaka$name <-
 #'   stringi::stri_unescape_unicode(sutta_pitaka$name)
+#' }
 #' # Count all the words in the Suttas:
 #' sum(
 #'   unique(
@@ -166,9 +169,11 @@ NULL
 #'}
 #'
 #' @examples
-#' # Clean up the Unicode characters to make things more readble:
+#' \donttest{
+#' # Clean up the Unicode characters to make things more readable:
 #' vinaya_pitaka$name <-
 #'   stringi::stri_unescape_unicode(vinaya_pitaka$name)
+#' }
 #'
 #' # Count all the words in the Vinaya Pitaka:
 #' sum(tipitaka_long[tipitaka_long$book %in% vinaya_pitaka$book, "n"])
@@ -190,9 +195,11 @@ NULL
 #'}\
 #'
 #' @examples
-#' # Clean up the Unicode characters to make things more readble:
+#' \donttest{
+#' # Clean up the Unicode characters to make things more readable:
 #' abhidhamma_pitaka$name <-
 #'   stringi::stri_unescape_unicode(abhidhamma_pitaka$name)
+#' }
 #'
 #' # Count all the words in the Abhidhamma Pitaka:
 #' sum(tipitaka_long[tipitaka_long$book %in% abhidhamma_pitaka$book, "n"])
@@ -228,11 +235,13 @@ NULL
 #' Pali-English Dictionary.
 #'
 #' @examples
-#' # Find most common words in the Mahāsatipatthāna Sutta excluding stop words
+#' \donttest{
+#' # Find most common words in the Mahasatipatthana Sutta excluding stop words
 #' library(dplyr)
 #' sati_sutta_long %>%
 #'   anti_join(pali_stop_words, by = "word") %>%
 #'   arrange(desc(freq))
+#' }
 #'
 #' @source \url{https://dsalsrv04.uchicago.edu/dictionaries/pali/}
 "pali_stop_words"
@@ -365,24 +374,32 @@ NULL
 "tipitaka_suttas_long"
 
 
-#' Sutta-Level Frequency Matrix (Wide Format)
+#' Sutta-Level Frequency Matrix (Wide Format, Sparse)
 #'
 #' Lemma x sutta frequency matrix for detailed multivariate analysis.
 #' Each row is a sutta, each column is a lemma, and values are frequencies.
+#' Stored as a sparse matrix since 99.3\% of entries are zero.
 #'
-#' @format A data frame with sutta IDs as row names and lemmas as columns.
+#' Standard operations like \code{dist()}, \code{hclust()}, and \code{[}
+#' subsetting work directly on this object.
+#'
+#' @format A sparse matrix of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}} with
+#'   sutta IDs as row names and lemma headwords as column names.
 #'   Values are word frequencies (proportions).
 #'
 #' @source Critical edition based on PTS with corrections from SC/VRI comparison.
 #'
-#' @note This dataset is large (~5,765 suttas x ~11,410 lemmas).
+#' @note To convert to a dense matrix, use \code{as.matrix(tipitaka_suttas_wide)}.
+#'   Caution: the dense matrix requires ~500MB of memory.
 #'
 #' @examples
+#' \donttest{
 #' # Cluster suttas from Digha Nikaya
 #' dn_suttas <- tipitaka_suttas_wide[grep("^dn", rownames(tipitaka_suttas_wide)), ]
 #' dist_m <- dist(dn_suttas)
 #' hc <- hclust(dist_m)
 #' plot(hc, main = "DN Sutta Clustering")
+#' }
 #'
 "tipitaka_suttas_wide"
 
