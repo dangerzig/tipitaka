@@ -17,8 +17,7 @@ A data frame with columns:
 \source{
 Critical edition based on PTS with corrections from five-witness
   collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
-  Generated using the pali-canon Python library
-  (\url{https://github.com/dangerzig/pali-canon}).
+  Generated using the pali-canon Python library.
 }
 \usage{
 tipitaka_long_critical

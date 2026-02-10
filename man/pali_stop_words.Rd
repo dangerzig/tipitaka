@@ -8,7 +8,7 @@
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 245 rows and 1 columns.
 }
 \source{
-\url{https://dsalsrv04.uchicago.edu/dictionaries/pali/}
+\url{https://dsal.uchicago.edu/dictionaries/pali/}
 }
 \usage{
 pali_stop_words

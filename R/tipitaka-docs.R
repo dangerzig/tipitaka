@@ -222,7 +222,7 @@
 #' dn22_content <- dn22[!dn22$word %in% pali_stop_words$word, ]
 #' head(dn22_content[order(-dn22_content$freq), ])
 #'
-#' @source \url{https://dsalsrv04.uchicago.edu/dictionaries/pali/}
+#' @source \url{https://dsal.uchicago.edu/dictionaries/pali/}
 "pali_stop_words"
 
 
@@ -262,8 +262,7 @@
 #'
 #' @source Critical edition based on PTS with corrections from five-witness
 #'   collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
-#'   Generated using the pali-canon Python library
-#'   (\url{https://github.com/dangerzig/pali-canon}).
+#'   Generated using the pali-canon Python library.
 #'
 #' @examples
 #' # Find most common lemmas in Digha Nikaya
