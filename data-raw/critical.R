@@ -5,6 +5,7 @@
 # SuttaCentral and VRI editions.
 
 library(usethis)
+library(Matrix)
 
 # Set working directory to package root
 # (This script should be run from the package root directory)
@@ -71,16 +72,20 @@ tipitaka_suttas_long$freq <- as.numeric(tipitaka_suttas_long$freq)
 tipitaka_suttas_long$sutta <- as.character(tipitaka_suttas_long$sutta)
 tipitaka_suttas_long$nikaya <- as.character(tipitaka_suttas_long$nikaya)
 
-# tipitaka_suttas_wide: Sutta x lemma frequency matrix
-# NOTE: This file is very large (~855MB) and may exceed CRAN size limits.
-# It contains ~5,765 suttas x ~11,410 lemmas.
-# We'll try to load and compress it, but it may need to be distributed separately.
-message("Loading tipitaka_suttas_wide (this may take a moment)...")
-tipitaka_suttas_wide <- read.csv(
-  "data-raw/critical/tipitaka_suttas_wide.csv",
-  row.names = 1,
-  stringsAsFactors = FALSE,
-  check.names = FALSE
+# tipitaka_suttas_wide: Sutta x lemma frequency matrix (sparse)
+# The wide CSV is 815MB with 99.3% zeros. Instead of reading it, we build
+# a sparse matrix directly from tipitaka_suttas_long (already loaded above).
+# As a dgCMatrix with xz compression, this is ~1.2MB.
+message("Building tipitaka_suttas_wide as sparse matrix...")
+sutta_ids <- sort(unique(tipitaka_suttas_long$sutta))
+lemma_ids <- sort(unique(tipitaka_suttas_long$word))
+
+tipitaka_suttas_wide <- sparseMatrix(
+  i = match(tipitaka_suttas_long$sutta, sutta_ids),
+  j = match(tipitaka_suttas_long$word, lemma_ids),
+  x = tipitaka_suttas_long$freq,
+  dims = c(length(sutta_ids), length(lemma_ids)),
+  dimnames = list(sutta_ids, lemma_ids)
 )
 
 # ------------------------------------------------------------------------------
@@ -102,7 +107,7 @@ use_data(tipitaka_raw_critical, overwrite = TRUE, compress = "xz")
 message("Saving tipitaka_suttas_long...")
 use_data(tipitaka_suttas_long, overwrite = TRUE, compress = "xz")
 
-message("Saving tipitaka_suttas_wide...")
+message("Saving tipitaka_suttas_wide (sparse matrix)...")
 use_data(tipitaka_suttas_wide, overwrite = TRUE, compress = "xz")
 
 message("Done! Critical edition data files created.")
