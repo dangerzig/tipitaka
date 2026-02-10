@@ -11,8 +11,9 @@ Description: Provides access to the complete Pali Canon, or
     Tipitaka, the canonical scripture for Theravadin Buddhists
     worldwide. Includes both the Chattha Sangayana Tipitaka
     (Vipassana Research Institute, 1990) and a critical edition
-    of the Sutta Pitaka with lemmatization and sutta-level
-    granularity based on the Digital Pali Dictionary.
+    of the Sutta Pitaka based on a five-witness collation
+    (PTS, SuttaCentral, VRI, BJT, Thai) with lemmatization
+    via the Digital Pali Dictionary and sutta-level granularity.
 License: CC0
 Encoding: UTF-8
 LazyData: true

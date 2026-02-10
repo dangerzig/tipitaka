@@ -9,13 +9,15 @@ A data frame with nikayas as row names and lemmas as columns.
   Values are word frequencies (proportions).
 }
 \source{
-Critical edition based on PTS with corrections from SC/VRI comparison.
+Critical edition based on PTS with corrections from five-witness
+  collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
 }
 \usage{
 tipitaka_wide_critical
 }
 \description{
-Lemma x nikaya frequency matrix from the critical edition.
+Lemma x nikaya frequency matrix from the critical edition of the
+Sutta Pitaka.
 Each row is a nikaya, each column is a lemma, and values are frequencies.
 Useful for clustering, PCA, and other multivariate analyses.
 }

@@ -10,7 +10,8 @@ A sparse matrix of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix}} with
   Values are word frequencies (proportions).
 }
 \source{
-Critical edition based on PTS with corrections from SC/VRI comparison.
+Critical edition based on PTS with corrections from five-witness
+  collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
 }
 \usage{
 tipitaka_suttas_wide

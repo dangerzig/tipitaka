@@ -16,7 +16,8 @@ A data frame with columns:
 }
 }
 \source{
-Critical edition based on PTS with corrections from SC/VRI comparison.
+Critical edition based on PTS with corrections from five-witness
+  collation (PTS/GRETIL, SuttaCentral, VRI, BJT, Thai).
 }
 \usage{
 tipitaka_suttas_long

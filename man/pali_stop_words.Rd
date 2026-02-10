@@ -18,13 +18,11 @@ A list of all declinables and particles from the PTS
 Pali-English Dictionary.
 }
 \examples{
-\donttest{
-# Find most common words in the Mahasatipatthana Sutta excluding stop words
-library(dplyr)
-sati_sutta_long \%>\%
-  anti_join(pali_stop_words, by = "word") \%>\%
-  arrange(desc(freq))
-}
+# Extract lemma frequencies for the Mahasatipatthana Sutta (DN 22)
+dn22 <- tipitaka_suttas_long[tipitaka_suttas_long$sutta == "dn22", ]
+# Remove stop words
+dn22_content <- dn22[!dn22$word \%in\% pali_stop_words$word, ]
+head(dn22_content[order(-dn22_content$freq), ])
 
 }
 \keyword{datasets}
