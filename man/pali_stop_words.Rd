@@ -18,11 +18,9 @@ A list of all declinables and particles from the PTS
 Pali-English Dictionary.
 }
 \examples{
-# Extract lemma frequencies for the Mahasatipatthana Sutta (DN 22)
-dn22 <- tipitaka_suttas_long[tipitaka_suttas_long$sutta == "dn22", ]
-# Remove stop words
-dn22_content <- dn22[!dn22$word \%in\% pali_stop_words$word, ]
-head(dn22_content[order(-dn22_content$freq), ])
+# Show top content words in the Tipitaka (excluding stop words)
+content_words <- tipitaka_long[!tipitaka_long$word \%in\% pali_stop_words$word, ]
+head(content_words[order(-content_words$n), ], 10)
 
 }
 \keyword{datasets}

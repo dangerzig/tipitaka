@@ -9,17 +9,16 @@
 The package tipitaka provides access to the complete Pali
 Canon, or Tipitaka, from R. The Tipitaka is the canonical
 scripture for Theravadin Buddhists worldwide. This package
-includes both the original VRI (Vipassana Research Institute)
-data and a critical edition of the Sutta Pitaka based on a
-five-witness collation of PTS (via GRETIL), SuttaCentral,
-VRI, Buddha Jayanti Tipitaka (BJT), and Thai Royal Edition.
-The critical edition includes lemmatization using the Digital
-Pali Dictionary (99.78\% token-level coverage) and
-sutta-level granularity.
+includes the VRI (Vipassana Research Institute) Chattha
+Sangayana edition along with tools for working with Pali text.
 }
-\section{VRI Data (Original)}{
+\details{
+For a lemmatized critical edition of the Tipitaka with
+sutta-level granularity, see the companion package
+\pkg{tipitaka.critical}.
+}
+\section{Datasets}{
 
-The original datasets from the Chattha Sangayana Tipitaka:
 \itemize{
   \item tipitaka_raw: the complete text of the Tipitaka (VRI)
   \item tipitaka_long: the complete Tipitaka in "long" form (VRI)
@@ -33,20 +32,6 @@ The original datasets from the Chattha Sangayana Tipitaka:
 }
 }
 
-\section{Critical Edition Data (New)}{
-
-Lemmatized data from the critical edition (Sutta Pitaka only):
-\itemize{
-  \item tipitaka_long_critical: lemma frequencies by nikaya
-  \item tipitaka_wide_critical: lemma x nikaya frequency matrix
-  \item tipitaka_raw_critical: full text per nikaya
-  \item tipitaka_long_words: surface form frequencies by nikaya
-  \item tipitaka_suttas_raw: full text per sutta
-  \item tipitaka_suttas_long: lemma frequencies by sutta
-  \item tipitaka_suttas_wide: lemma x sutta frequency matrix
-}
-}
-
 \section{Tools}{
 
 Functions for working with Pali text:
@@ -55,7 +40,6 @@ Functions for working with Pali text:
   \item pali_gt: greater-than function for Pali strings
   \item pali_eq: equals function for Pali strings
   \item pali_sort: sorting function for vectors of Pali strings
-  \item search_lemma: search for lemma occurrences across suttas
 }
 }
 

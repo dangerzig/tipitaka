@@ -120,11 +120,6 @@ pali_gt <- function(word1, word2) {
 #' @export
 #'
 #' @examples
-#' # Every unique lemma from the Mahasatipatthana Sutta (DN 22)
-#' # in Pali alphabetical order:
-#' dn22 <- tipitaka_suttas_long[tipitaka_suttas_long$sutta == "dn22", ]
-#' pali_sort(dn22$word)
-#'
 #' # A sorted list of 100 random words from the Tipitaka:
 #' pali_sort(sample(tipitaka_long$word, 100))
 pali_sort <- function(word_list) {
@@ -151,34 +146,3 @@ pali_sort <- function(word_list) {
 #           pivot,
 #           pali_sort(pivot_greater)))
 #}
-
-
-#' Search for lemma occurrences across suttas
-#'
-#' Searches the sutta-level lemma frequency data for occurrences
-#' of a specific lemma. Returns all suttas containing that lemma,
-#' sorted by frequency (most frequent first).
-#'
-#' @param lemma Character string of the lemma to search for
-#' @param data Dataset to search in (default: tipitaka_suttas_long)
-#' @return A data frame of occurrences with sutta, nikaya, count,
-#'   and frequency information. Returns empty data frame if lemma not found.
-#' @export
-#'
-#' @examples
-#' # Find all suttas mentioning "dhamma"
-#' dhamma <- search_lemma("dhamma")
-#' head(dhamma)
-#'
-#' # Find suttas mentioning "nibbana", sorted by frequency
-#' nibbana <- search_lemma("nibbana")
-#' head(nibbana)
-#'
-search_lemma <- function(lemma, data = NULL) {
-  if (is.null(data)) {
-    data <- tipitaka_suttas_long
-  }
-  result <- data[data$word == lemma, ]
-  result <- result[order(-result$freq), ]
-  return(result)
-}
