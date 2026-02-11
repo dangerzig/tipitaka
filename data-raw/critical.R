@@ -11,50 +11,16 @@ library(Matrix)
 # (This script should be run from the package root directory)
 
 # ------------------------------------------------------------------------------
-# Load critical edition data (lemmatized)
+# Re-save VRI datasets with xz compression (smaller in tarball)
 # ------------------------------------------------------------------------------
 
-# tipitaka_long_critical: Lemma frequencies by nikaya
-# This groups inflected forms by dictionary headword using DPD lemmatization
-tipitaka_long_critical <- read.csv(
-  "data-raw/critical/tipitaka_long.csv",
-  stringsAsFactors = FALSE
-)
-# Ensure proper column types
-tipitaka_long_critical$word <- as.character(tipitaka_long_critical$word)
-tipitaka_long_critical$n <- as.integer(tipitaka_long_critical$n)
-tipitaka_long_critical$total <- as.integer(tipitaka_long_critical$total)
-tipitaka_long_critical$freq <- as.numeric(tipitaka_long_critical$freq)
-tipitaka_long_critical$book <- as.character(tipitaka_long_critical$book)
-
-# tipitaka_long_words: Surface form frequencies by nikaya (non-lemmatized)
-# Useful for comparison with lemmatized data
-tipitaka_long_words <- read.csv(
-  "data-raw/critical/tipitaka_long_words.csv",
-  stringsAsFactors = FALSE
-)
-tipitaka_long_words$word <- as.character(tipitaka_long_words$word)
-tipitaka_long_words$n <- as.integer(tipitaka_long_words$n)
-tipitaka_long_words$total <- as.integer(tipitaka_long_words$total)
-tipitaka_long_words$freq <- as.numeric(tipitaka_long_words$freq)
-tipitaka_long_words$book <- as.character(tipitaka_long_words$book)
-
-# tipitaka_wide_critical: Lemma x nikaya frequency matrix
-tipitaka_wide_critical <- read.csv(
-  "data-raw/critical/tipitaka_wide.csv",
-  row.names = 1,
-  stringsAsFactors = FALSE,
-  check.names = FALSE
-)
-
-# tipitaka_raw_critical: Full text per nikaya
-tipitaka_raw_critical <- read.csv(
-  "data-raw/critical/tipitaka_raw.csv",
-  stringsAsFactors = FALSE
-)
-tipitaka_raw_critical$book <- as.character(tipitaka_raw_critical$book)
-tipitaka_raw_critical$book_name <- as.character(tipitaka_raw_critical$book_name)
-tipitaka_raw_critical$text <- as.character(tipitaka_raw_critical$text)
+message("Re-saving VRI datasets with xz compression...")
+for (nm in c("tipitaka_raw", "tipitaka_long", "tipitaka_wide")) {
+  e <- new.env()
+  load(file.path("data", paste0(nm, ".rda")), envir=e)
+  save(list=nm, file=file.path("data", paste0(nm, ".rda")), envir=e, compress="xz")
+  message("  ", nm, ": ", file.size(file.path("data", paste0(nm, ".rda"))), " bytes")
+}
 
 # ------------------------------------------------------------------------------
 # Load sutta-level data
@@ -100,18 +66,6 @@ tipitaka_suttas_wide <- sparseMatrix(
 # ------------------------------------------------------------------------------
 # Save as package data with xz compression
 # ------------------------------------------------------------------------------
-
-message("Saving tipitaka_long_critical...")
-use_data(tipitaka_long_critical, overwrite = TRUE, compress = "xz")
-
-message("Saving tipitaka_long_words...")
-use_data(tipitaka_long_words, overwrite = TRUE, compress = "xz")
-
-message("Saving tipitaka_wide_critical...")
-use_data(tipitaka_wide_critical, overwrite = TRUE, compress = "xz")
-
-message("Saving tipitaka_raw_critical...")
-use_data(tipitaka_raw_critical, overwrite = TRUE, compress = "xz")
 
 message("Saving tipitaka_suttas_raw...")
 use_data(tipitaka_suttas_raw, overwrite = TRUE, compress = "xz")

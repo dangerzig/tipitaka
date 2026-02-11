@@ -12,3 +12,6 @@
 ^CRAN-SUBMISSION$
 ^\.claude$
 ^\.github$
+^\.tmp\.driveupload$
+^\.tmp\.drivedownload$
+^README\.html$

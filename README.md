@@ -59,12 +59,9 @@ Abhidhamma).
 **Critical Edition** (new in v1.0): A lemmatized critical edition of the
 Sutta Pitaka only.
 
-- `tipitaka_long_critical`, `tipitaka_wide_critical` - Lemma frequencies
-  by nikaya
-- `tipitaka_suttas_long`, `tipitaka_suttas_wide` - Lemma frequencies by
-  sutta
 - `tipitaka_suttas_raw` - Full text per sutta
-- `tipitaka_long_words` - Surface forms (non-lemmatized) for comparison
+- `tipitaka_suttas_long` - Lemma frequencies by sutta
+- `tipitaka_suttas_wide` - Lemma x sutta frequency matrix (sparse)
 
 ## Pali Alphabet
 
@@ -165,8 +162,18 @@ The lemmatized critical edition enables more meaningful clustering by
 grouping inflected forms:
 
 ``` r
-# Cluster the five nikayas using lemmatized data
-dist_critical <- dist(tipitaka_wide_critical)
+library(dplyr, quietly = TRUE)
+library(tidyr)
+# Aggregate sutta-level lemma frequencies to nikaya level
+nikaya_wide <- tipitaka_suttas_long %>%
+  group_by(nikaya, word) %>%
+  summarise(n = sum(n), .groups = "drop") %>%
+  group_by(nikaya) %>%
+  mutate(freq = n / sum(n)) %>%
+  select(nikaya, word, freq) %>%
+  pivot_wider(names_from = word, values_from = freq, values_fill = 0) %>%
+  tibble::column_to_rownames("nikaya")
+dist_critical <- dist(nikaya_wide)
 hc_critical <- hclust(dist_critical)
 plot(hc_critical, main = "Nikaya Clustering (Lemmatized)")
 ```
@@ -185,25 +192,6 @@ head(nibbana[, c("sutta", "nikaya", "n", "freq")], 10)
 #> 287742 dhp273-289     kn 1 0.005494505
 #> 410997    snp5.19     kn 1 0.003322259
 #> 279614      cnd22     kn 7 0.001741727
-```
-
-### Comparing Lemmatized vs. Surface Forms
-
-The critical edition includes both lemmatized (`tipitaka_long_critical`)
-and non-lemmatized (`tipitaka_long_words`) word counts, making it easy
-to see the effect of lemmatization:
-
-``` r
-# Surface forms in the Digha Nikaya
-dn_words <- tipitaka_long_words[tipitaka_long_words$book == "dn", ]
-# Lemmatized forms
-dn_lemmas <- tipitaka_long_critical[tipitaka_long_critical$book == "dn", ]
-cat("DN surface forms:", nrow(dn_words), "\n")
-#> DN surface forms: 17348
-cat("DN unique lemmas:", nrow(dn_lemmas), "\n")
-#> DN unique lemmas: 9782
-cat("Reduction:", round(100 * (1 - nrow(dn_lemmas) / nrow(dn_words)), 1), "%\n")
-#> Reduction: 43.6 %
 ```
 
 ### Extracting Sutta Text
@@ -244,19 +232,27 @@ that appear much more frequently in one nikaya than the overall average:
 
 ``` r
 library(dplyr, quietly = TRUE)
+# Aggregate sutta-level data to nikaya level
+nikaya_long <- tipitaka_suttas_long %>%
+  group_by(nikaya, word) %>%
+  summarise(n = sum(n), .groups = "drop") %>%
+  group_by(nikaya) %>%
+  mutate(total = sum(n), freq = n / total) %>%
+  ungroup()
+
 # Calculate overall frequency for each lemma
-overall <- tipitaka_long_critical %>%
+overall <- nikaya_long %>%
   group_by(word) %>%
   summarise(overall_freq = sum(n) / sum(total), .groups = "drop")
 
 # Find the most distinctive lemma in each nikaya
-distinctive <- tipitaka_long_critical %>%
+distinctive <- nikaya_long %>%
   inner_join(overall, by = "word") %>%
   mutate(ratio = freq / overall_freq) %>%
   filter(n >= 100) %>%  # only common words
-  group_by(book) %>%
+  group_by(nikaya) %>%
   slice_max(ratio, n = 5) %>%
-  select(nikaya = book, lemma = word, freq, overall_freq, ratio)
+  select(nikaya, lemma = word, freq, overall_freq, ratio)
 
 distinctive
 #> # A tibble: 25 × 5

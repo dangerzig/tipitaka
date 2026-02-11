@@ -20,11 +20,6 @@ This has been implemented in C++ as the original R version
 was about 500x slower.
 }
 \examples{
-# Every unique lemma from the Mahasatipatthana Sutta (DN 22)
-# in Pali alphabetical order:
-dn22 <- tipitaka_suttas_long[tipitaka_suttas_long$sutta == "dn22", ]
-pali_sort(dn22$word)
-
 # A sorted list of 100 random words from the Tipitaka:
 pali_sort(sample(tipitaka_long$word, 100))
 }
