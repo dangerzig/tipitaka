@@ -25,9 +25,10 @@ the Vinaya Pitaka. These are easier to read if you call
 vinaya_pitaka$name <-
   stringi::stri_unescape_unicode(vinaya_pitaka$name)
 }
-
+\donttest{
 # Count all the words in the Vinaya Pitaka:
 sum(tipitaka_long[tipitaka_long$book \%in\% vinaya_pitaka$book, "n"])
+}
 
 }
 \keyword{datasets}

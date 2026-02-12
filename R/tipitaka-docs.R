@@ -99,10 +99,12 @@
 #' sutta_pitaka$name <-
 #'   stringi::stri_unescape_unicode(sutta_pitaka$name)
 #' }
+#' \donttest{
 #' # Count all the words in the Suttas:
 #' sum(
 #'   unique(
 #'     tipitaka_long[tipitaka_long$book %in% sutta_pitaka$book, "total"]))
+#' }
 #'
 "sutta_pitaka"
 
@@ -125,9 +127,10 @@
 #' vinaya_pitaka$name <-
 #'   stringi::stri_unescape_unicode(vinaya_pitaka$name)
 #' }
-#'
+#' \donttest{
 #' # Count all the words in the Vinaya Pitaka:
 #' sum(tipitaka_long[tipitaka_long$book %in% vinaya_pitaka$book, "n"])
+#' }
 #'
 "vinaya_pitaka"
 
@@ -151,9 +154,10 @@
 #' abhidhamma_pitaka$name <-
 #'   stringi::stri_unescape_unicode(abhidhamma_pitaka$name)
 #' }
-#'
+#' \donttest{
 #' # Count all the words in the Abhidhamma Pitaka:
 #' sum(tipitaka_long[tipitaka_long$book %in% abhidhamma_pitaka$book, "n"])
+#' }
 #'
 "abhidhamma_pitaka"
 
@@ -165,9 +169,11 @@
 #' Pali-English Dictionary.
 #'
 #' @examples
+#' \donttest{
 #' # Show top content words in the Tipitaka (excluding stop words)
 #' content_words <- tipitaka_long[!tipitaka_long$word %in% pali_stop_words$word, ]
 #' head(content_words[order(-content_words$n), ], 10)
+#' }
 #'
 #' @source \url{https://dsal.uchicago.edu/dictionaries/pali/}
 "pali_stop_words"
