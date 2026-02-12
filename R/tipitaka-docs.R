@@ -23,10 +23,10 @@
 #' }
 #'
 #' @section Derived Data:
-#' These are computed on demand from \code{tipitaka_raw}:
+#' These are computed on demand from \code{tipitaka_raw} on first access:
 #' \itemize{
-#'   \item \code{\link{tipitaka_long}()}: word frequencies per volume
-#'   \item \code{\link{tipitaka_wide}()}: word frequency matrix (volumes x words)
+#'   \item tipitaka_long: word frequencies per volume
+#'   \item tipitaka_wide: word frequency matrix (volumes x words)
 #' }
 #'
 #' @section Tools:
@@ -100,8 +100,9 @@
 #'   stringi::stri_unescape_unicode(sutta_pitaka$name)
 #' }
 #' # Count all the words in the Suttas:
-#' tl <- tipitaka_long()
-#' sum(unique(tl[tl$book %in% sutta_pitaka$book, "total"]))
+#' sum(
+#'   unique(
+#'     tipitaka_long[tipitaka_long$book %in% sutta_pitaka$book, "total"]))
 #'
 "sutta_pitaka"
 
@@ -126,8 +127,7 @@
 #' }
 #'
 #' # Count all the words in the Vinaya Pitaka:
-#' tl <- tipitaka_long()
-#' sum(tl[tl$book %in% vinaya_pitaka$book, "n"])
+#' sum(tipitaka_long[tipitaka_long$book %in% vinaya_pitaka$book, "n"])
 #'
 "vinaya_pitaka"
 
@@ -153,8 +153,7 @@
 #' }
 #'
 #' # Count all the words in the Abhidhamma Pitaka:
-#' tl <- tipitaka_long()
-#' sum(tl[tl$book %in% abhidhamma_pitaka$book, "n"])
+#' sum(tipitaka_long[tipitaka_long$book %in% abhidhamma_pitaka$book, "n"])
 #'
 "abhidhamma_pitaka"
 
@@ -167,8 +166,7 @@
 #'
 #' @examples
 #' # Show top content words in the Tipitaka (excluding stop words)
-#' tl <- tipitaka_long()
-#' content_words <- tl[!tl$word %in% pali_stop_words$word, ]
+#' content_words <- tipitaka_long[!tipitaka_long$word %in% pali_stop_words$word, ]
 #' head(content_words[order(-content_words$n), ], 10)
 #'
 #' @source \url{https://dsal.uchicago.edu/dictionaries/pali/}

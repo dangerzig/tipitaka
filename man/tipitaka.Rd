@@ -28,10 +28,10 @@ Provides access to the complete Pali Canon, or Tipitaka, the canonical scripture
 
 \section{Derived Data}{
 
-These are computed on demand from \code{tipitaka_raw}:
+These are computed on demand from \code{tipitaka_raw} on first access:
 \itemize{
-  \item \code{\link{tipitaka_long}()}: word frequencies per volume
-  \item \code{\link{tipitaka_wide}()}: word frequency matrix (volumes x words)
+  \item tipitaka_long: word frequencies per volume
+  \item tipitaka_wide: word frequency matrix (volumes x words)
 }
 }
 

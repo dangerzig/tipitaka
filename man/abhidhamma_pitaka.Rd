@@ -28,8 +28,7 @@ abhidhamma_pitaka$name <-
 }
 
 # Count all the words in the Abhidhamma Pitaka:
-tl <- tipitaka_long()
-sum(tl[tl$book \%in\% abhidhamma_pitaka$book, "n"])
+sum(tipitaka_long[tipitaka_long$book \%in\% abhidhamma_pitaka$book, "n"])
 
 }
 \keyword{datasets}
