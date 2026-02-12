@@ -120,8 +120,10 @@ pali_gt <- function(word1, word2) {
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' # A sorted list of 100 random words from the Tipitaka:
 #' pali_sort(sample(tipitaka_long$word, 100))
+#' }
 pali_sort <- function(word_list) {
   c_pali_sort(word_list)
 }

@@ -25,10 +25,12 @@ the Sutta Pitaka. These are easier to read if you call
 sutta_pitaka$name <-
   stringi::stri_unescape_unicode(sutta_pitaka$name)
 }
+\donttest{
 # Count all the words in the Suttas:
 sum(
   unique(
     tipitaka_long[tipitaka_long$book \%in\% sutta_pitaka$book, "total"]))
+}
 
 }
 \keyword{datasets}

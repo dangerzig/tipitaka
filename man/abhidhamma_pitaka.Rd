@@ -26,9 +26,10 @@ the Abhidhamma Pitaka. These are easier to read if you call
 abhidhamma_pitaka$name <-
   stringi::stri_unescape_unicode(abhidhamma_pitaka$name)
 }
-
+\donttest{
 # Count all the words in the Abhidhamma Pitaka:
 sum(tipitaka_long[tipitaka_long$book \%in\% abhidhamma_pitaka$book, "n"])
+}
 
 }
 \keyword{datasets}
