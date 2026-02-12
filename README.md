@@ -19,49 +19,21 @@ likely around 100 BCE.
 The tipitaka package provides the texts of the Tipitaka in various
 electronic forms, plus functions for working with the Pali language.
 
-## What’s New in Version 1.0
+## Related Packages
 
-Version 1.0 adds a **critical edition** of the Sutta Pitaka based on a
-five-witness collation:
-
-- **PTS** (Pali Text Society editions via GRETIL) — the base text
-- **SuttaCentral** (Mahāsaṅgīti edition)
-- **VRI** (Chaṭṭha Saṅgāyana / CST4)
-- **BJT** (Buddha Jayanti Tipitaka, Sri Lanka)
-- **Thai** (Syām Raṭṭha Royal Thai Edition)
-
-Key improvements:
-
-- **Lemmatization**: Words are grouped by dictionary headword using the
-  [Digital Pali Dictionary](https://digitalpalidictionary.github.io/)
-  (DPD), achieving 99.78% token-level coverage. For example,
-  “buddhassa”, “buddho”, and “buddhaṃ” are all counted under “buddha”.
-
-- **Sutta-level granularity**: Word frequencies are available for each
-  individual sutta (~5,700 suttas), not just by volume.
-
-- **Corrections**: Where multiple witnesses (SC, VRI, BJT) agree against
-  PTS and the PTS reading is not a valid Pali word per DPD, the text is
-  corrected and the original PTS reading recorded.
+For a **lemmatized critical edition** of the Tipitaka with sutta-level
+granularity, see
+[tipitaka.critical](https://github.com/dangerzig/tipitaka.critical).
 
 ## Data Sources
 
-The package includes two data sources:
+This package includes the complete Tipitaka from the Chattha Sangayana
+Tipitaka version 4.0 (CST4) published by the Vipassana Research
+Institute. It covers all three pitakas (Vinaya, Sutta, and Abhidhamma).
 
-**VRI Edition** (original datasets): The complete Tipitaka from the
-Chattha Sangāyana Tipiṭaka version 4.0 (CST4) published by the Vipassana
-Research Institute. This covers all three pitakas (Vinaya, Sutta, and
-Abhidhamma).
-
-- `tipitaka_raw`, `tipitaka_long`, `tipitaka_wide` - Full canon,
-  volume-level
-
-**Critical Edition** (new in v1.0): A lemmatized critical edition of the
-Sutta Pitaka only.
-
-- `tipitaka_suttas_raw` - Full text per sutta
-- `tipitaka_suttas_long` - Lemma frequencies by sutta
-- `tipitaka_suttas_wide` - Lemma x sutta frequency matrix (sparse)
+- `tipitaka_raw` — Full text per volume (shipped as data)
+- `tipitaka_long()` — Word frequencies per volume (computed on demand)
+- `tipitaka_wide()` — Word frequency matrix (computed on demand)
 
 ## Pali Alphabet
 
@@ -97,7 +69,8 @@ the Pali Canon. For example:
 
 ``` r
 library(tipitaka)
-dist_m <- dist(tipitaka_wide)
+tw <- tipitaka_wide()
+dist_m <- dist(tw)
 cluster <- hclust(dist_m)
 plot(cluster)
 ```
@@ -115,32 +88,18 @@ fviz_cluster(km, dist_m, labelsize = 12, repel = TRUE)
 
 <img src="man/figures/README-kmeans-1.png" alt="" width="100%" />
 
-You can extract data for any individual sutta from the critical edition
-and explore it with packages like `wordcloud`. Here we look at the
-Mahasatipatthana Sutta (DN 22):
-
-``` r
-library(wordcloud)
-# Extract lemma frequencies for DN 22
-dn22 <- tipitaka_suttas_long[tipitaka_suttas_long$sutta == "dn22", ]
-# Remove stop words and plot
-dn22_content <- dn22[!dn22$word %in% pali_stop_words$word, ]
-with(dn22_content, wordcloud(word, n, max.words = 40))
-```
-
-<img src="man/figures/README-wordclouds-1.png" alt="" width="100%" />
-
 Finally, we can look at word frequency by rank:
 
 ``` r
 library(dplyr, quietly = TRUE)
-freq_by_rank <- tipitaka_long %>%
+tl <- tipitaka_long()
+freq_by_rank <- tl %>%
   group_by(word) %>%
   add_count(wt = n, name = "word_total") %>%
   ungroup() %>%
   distinct(word, .keep_all = TRUE) %>%
   mutate(tipitaka_total =
-           sum(distinct(tipitaka_long, book,
+           sum(distinct(tl, book,
                         .keep_all = TRUE)$total)) %>%
     transform(freq = word_total/tipitaka_total) %>%
   arrange(desc(freq)) %>%
@@ -155,119 +114,3 @@ freq_by_rank %>%
 ```
 
 <img src="man/figures/README-freq-by-word-1.png" alt="" width="100%" />
-
-## Lemmatized Analysis (New in v1.0)
-
-The lemmatized critical edition enables more meaningful clustering by
-grouping inflected forms:
-
-``` r
-library(dplyr, quietly = TRUE)
-library(tidyr)
-# Aggregate sutta-level lemma frequencies to nikaya level
-nikaya_wide <- tipitaka_suttas_long %>%
-  group_by(nikaya, word) %>%
-  summarise(n = sum(n), .groups = "drop") %>%
-  group_by(nikaya) %>%
-  mutate(freq = n / sum(n)) %>%
-  select(nikaya, word, freq) %>%
-  pivot_wider(names_from = word, values_from = freq, values_fill = 0) %>%
-  tibble::column_to_rownames("nikaya")
-dist_critical <- dist(nikaya_wide)
-hc_critical <- hclust(dist_critical)
-plot(hc_critical, main = "Nikaya Clustering (Lemmatized)")
-```
-
-<img src="man/figures/README-dendogram-critical-1.png" alt="" width="100%" />
-
-You can search for specific lemmas across all suttas:
-
-``` r
-# Find suttas that mention "nibbana" most frequently
-nibbana <- search_lemma("nibbana")
-head(nibbana[, c("sutta", "nikaya", "n", "freq")], 10)
-#>             sutta nikaya n        freq
-#> 300349      ja272     kn 1 0.032258065
-#> 271647       cnd4     kn 1 0.005524862
-#> 287742 dhp273-289     kn 1 0.005494505
-#> 410997    snp5.19     kn 1 0.003322259
-#> 279614      cnd22     kn 7 0.001741727
-```
-
-### Extracting Sutta Text
-
-The `tipitaka_suttas_raw` dataset provides the full Pali text of every
-sutta. For example, the opening of the Brahmajala Sutta (DN 1):
-
-``` r
-dn1_text <- tipitaka_suttas_raw[tipitaka_suttas_raw$sutta == "dn1", "text"]
-# Show the first 200 characters
-cat(substr(dn1_text, 1, 200), "...\n")
-#> Dīgha Nikāya 1
-#> Brahmajālasutta
-#> 1. Paribbājakakathā
-#> Evaṃ me sutaṃ—
-#> ekaṃ samayaṃ bhagavā antarā ca rājagahaṃ antarā ca nāḷandaṃ addhānamaggappaṭipanno hoti mahatā bhikkhusaṅghena saddhiṃ pañcamattehi bh ...
-```
-
-### Sutta-Level Clustering
-
-With sutta-level data, you can cluster individual suttas within a
-nikaya:
-
-``` r
-# Cluster all 34 Digha Nikaya suttas
-dn_suttas <- tipitaka_suttas_wide[grep("^dn", rownames(tipitaka_suttas_wide)), ]
-dist_dn <- dist(dn_suttas)
-hc_dn <- hclust(dist_dn)
-plot(hc_dn, main = "Digha Nikaya Sutta Clustering", cex = 0.7)
-```
-
-<img src="man/figures/README-sutta-clustering-1.png" alt="" width="100%" />
-
-### Cross-Nikaya Vocabulary Comparison
-
-Which lemmas are most distinctive to each nikaya? Here we find lemmas
-that appear much more frequently in one nikaya than the overall average:
-
-``` r
-library(dplyr, quietly = TRUE)
-# Aggregate sutta-level data to nikaya level
-nikaya_long <- tipitaka_suttas_long %>%
-  group_by(nikaya, word) %>%
-  summarise(n = sum(n), .groups = "drop") %>%
-  group_by(nikaya) %>%
-  mutate(total = sum(n), freq = n / total) %>%
-  ungroup()
-
-# Calculate overall frequency for each lemma
-overall <- nikaya_long %>%
-  group_by(word) %>%
-  summarise(overall_freq = sum(n) / sum(total), .groups = "drop")
-
-# Find the most distinctive lemma in each nikaya
-distinctive <- nikaya_long %>%
-  inner_join(overall, by = "word") %>%
-  mutate(ratio = freq / overall_freq) %>%
-  filter(n >= 100) %>%  # only common words
-  group_by(nikaya) %>%
-  slice_max(ratio, n = 5) %>%
-  select(nikaya, lemma = word, freq, overall_freq, ratio)
-
-distinctive
-#> # A tibble: 25 × 5
-#> # Groups:   nikaya [5]
-#>    nikaya lemma            freq overall_freq ratio
-#>    <chr>  <chr>           <dbl>        <dbl> <dbl>
-#>  1 an     akasiralābhī 0.000351    0.0000790  4.45
-#>  2 an     yathābhata   0.000647    0.000146   4.42
-#>  3 an     saṃvijjamāna 0.000699    0.000168   4.16
-#>  4 an     āhuneyya     0.000369    0.0000887  4.16
-#>  5 an     bahula       0.000735    0.000184   3.98
-#>  6 dn     vāseṭṭha     0.00181     0.000254   7.14
-#>  7 dn     acela        0.000779    0.000120   6.49
-#>  8 dn     nigrodha     0.000996    0.000173   5.76
-#>  9 dn     cunda        0.00134     0.000234   5.74
-#> 10 dn     vipassī      0.000906    0.000163   5.56
-#> # ℹ 15 more rows
-```
