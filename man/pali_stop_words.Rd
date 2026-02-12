@@ -19,7 +19,8 @@ Pali-English Dictionary.
 }
 \examples{
 # Show top content words in the Tipitaka (excluding stop words)
-content_words <- tipitaka_long[!tipitaka_long$word \%in\% pali_stop_words$word, ]
+tl <- tipitaka_long()
+content_words <- tl[!tl$word \%in\% pali_stop_words$word, ]
 head(content_words[order(-content_words$n), ], 10)
 
 }

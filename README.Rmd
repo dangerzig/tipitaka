@@ -24,22 +24,17 @@ The Tipitaka is the canonical scripture of Theravadin Buddhists worldwide. It pu
 
 The tipitaka package provides the texts of the Tipitaka in various electronic forms, plus functions for working with the Pali language.
 
-## Companion Package
+## Related Packages
 
-For a **lemmatized critical edition** of the Tipitaka with sutta-level granularity, see the companion package [tipitaka.critical](https://github.com/dangerzig/tipitaka.critical). It provides:
-
-* Lemmatization using the Digital Pali Dictionary (98% coverage)
-* Full text for ~5,800 individual text units across all three pitakas
-* Sutta-level word frequency data and sparse document-term matrices
-* Based on a five-witness collation (PTS, SuttaCentral, VRI, BJT, Thai)
+For a **lemmatized critical edition** of the Tipitaka with sutta-level granularity, see [tipitaka.critical](https://github.com/dangerzig/tipitaka.critical).
 
 ## Data Sources
 
 This package includes the complete Tipitaka from the Chattha Sangayana Tipitaka version 4.0 (CST4) published by the Vipassana Research Institute. It covers all three pitakas (Vinaya, Sutta, and Abhidhamma).
 
-* `tipitaka_raw` — Full text per volume
-* `tipitaka_long` — Word frequencies per volume
-* `tipitaka_wide` — Word frequency matrix (volumes x words)
+* `tipitaka_raw` — Full text per volume (shipped as data)
+* `tipitaka_long()` — Word frequencies per volume (computed on demand)
+* `tipitaka_wide()` — Word frequency matrix (computed on demand)
 
 ## Pali Alphabet
 
@@ -65,7 +60,8 @@ You can use tipitaka to do clustering analysis of the various books of the Pali 
 
 ```{r dendogram, message = FALSE, warning = FALSE}
 library(tipitaka)
-dist_m <- dist(tipitaka_wide)
+tw <- tipitaka_wide()
+dist_m <- dist(tw)
 cluster <- hclust(dist_m)
 plot(cluster)
 ```
@@ -81,13 +77,14 @@ fviz_cluster(km, dist_m, labelsize = 12, repel = TRUE)
 Finally, we can look at word frequency by rank:
 ```{r freq-by-word, message = FALSE, warning = FALSE}
 library(dplyr, quietly = TRUE)
-freq_by_rank <- tipitaka_long %>%
+tl <- tipitaka_long()
+freq_by_rank <- tl %>%
   group_by(word) %>%
   add_count(wt = n, name = "word_total") %>%
   ungroup() %>%
   distinct(word, .keep_all = TRUE) %>%
   mutate(tipitaka_total =
-           sum(distinct(tipitaka_long, book,
+           sum(distinct(tl, book,
                         .keep_all = TRUE)$total)) %>%
     transform(freq = word_total/tipitaka_total) %>%
   arrange(desc(freq)) %>%

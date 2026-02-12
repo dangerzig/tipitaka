@@ -2,21 +2,15 @@
 * local macOS (aarch64-apple-darwin25.0.0), R 4.5.2
 
 ## R CMD check results
-There were no ERRORs or WARNINGs.
-
-There was 1 NOTE:
-
-* checking installed package size ...
-
-  This is primarily a data package containing the complete scriptures of Theravadin Buddhism (the Tipitaka or Pali Canon) from the Vipassana Research Institute's Chattha Sangayana edition. The data will change very infrequently.
+There were no ERRORs, WARNINGs, or NOTEs.
 
 ## Resubmission
 
-This is a resubmission addressing the tarball size concern from the previous review. The tarball has been substantially reduced by moving the lemmatized critical edition data to a separate companion package (tipitaka.critical). This package now contains only the original VRI datasets and Pali text tools.
+This is a resubmission addressing the tarball size concern from the previous review.
 
 Changes since previous submission:
 
-1. **Tarball size reduction**: Moved all critical edition datasets to the companion package tipitaka.critical. Package now contains only original VRI data.
+1. **Tarball size reduction**: `tipitaka_long` and `tipitaka_wide` are now computed on demand from `tipitaka_raw` instead of being shipped as pre-built datasets. This substantially reduces the tarball size.
 
 2. **C++ standard**: Removed explicit C++14 specification as C++17 (default) suffices.
 
