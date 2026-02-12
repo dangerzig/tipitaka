@@ -1,37 +1,32 @@
 # Tipitaka (Pali Canon)
 #
-# This file documents the multiple versions of the complete
-# Pali Canon of Therevadin Buddhism, also know (in Pali)
-# as the Tipitaka, that are included in this package.
-#
-# It is provided in both "long" and "wide" formats, as each are
-# useful for different types of analysis, and conversion
-# between the two can be slow and error-prone.
+# This file documents the datasets included in the tipitaka package.
 
 
-#' tipitaka: A package for exploring the Pali Canon in R.
+#' tipitaka: Data and Tools for Analyzing the Pali Canon
 #'
-#' The package tipitaka provides access to the complete Pali
+#' The tipitaka package provides access to the complete Pali
 #' Canon, or Tipitaka, from R. The Tipitaka is the canonical
 #' scripture for Theravadin Buddhists worldwide. This package
 #' includes the VRI (Vipassana Research Institute) Chattha
 #' Sangayana edition along with tools for working with Pali text.
 #'
-#' For a lemmatized critical edition of the Tipitaka with
-#' sutta-level granularity, see the companion package
-#' \pkg{tipitaka.critical}.
-#'
 #' @section Datasets:
 #' \itemize{
 #'   \item tipitaka_raw: the complete text of the Tipitaka (VRI)
-#'   \item tipitaka_long: the complete Tipitaka in "long" form (VRI)
-#'   \item tipitaka_wide: the complete Tipitaka in "wide" form (VRI)
 #'   \item tipitaka_names: the names of each book of the Tipitaka
 #'   \item sutta_pitaka: the names of each volume of the Sutta Pitaka
 #'   \item vinaya_pitaka: the names of each volume of the Vinaya Pitaka
 #'   \item abhidhamma_pitaka: the names of each volume of the Abhidhamma Pitaka
 #'   \item pali_alphabet: the complete Pali alphabet in traditional order
 #'   \item pali_stop_words: a set of "stop words" for Pali
+#' }
+#'
+#' @section Derived Data:
+#' These are computed on demand from \code{tipitaka_raw}:
+#' \itemize{
+#'   \item \code{\link{tipitaka_long}()}: word frequencies per volume
+#'   \item \code{\link{tipitaka_wide}()}: word frequency matrix (volumes x words)
 #' }
 #'
 #' @section Tools:
@@ -42,6 +37,11 @@
 #'   \item pali_eq: equals function for Pali strings
 #'   \item pali_sort: sorting function for vectors of Pali strings
 #' }
+#'
+#' @section Related Packages:
+#' The companion package \pkg{tipitaka.critical} provides a
+#' lemmatized critical edition of the complete Tipitaka based on
+#' a five-witness collation with sutta-level granularity.
 #'
 #' @name tipitaka
 #' @useDynLib tipitaka, .registration = TRUE
@@ -60,35 +60,6 @@
 #'
 #' @source Vipassana Research Institute, CST4, April 2020
 "tipitaka_raw"
-
-
-#' Tipitaka in "long" form
-#'
-#' Every word of every volume of the Tipitaka, with one word per
-#' volume per line.
-#'
-#' @format A tibble with the variables:
-#' \describe{
-#' \item{word}{Pali word}
-#' \item{n}{Number of time this word appears in this book}
-#' \item{total}{Ttal number of words in this book}
-#' \item{freq}{Frequency with which this word appears in this book}
-#' \item{book}{Abbreviated book name}
-#' }
-#'
-#' @source Vipassana Research Institute, CST4, April 2020
-"tipitaka_long"
-
-
-#' Tipitaka in "wide" form
-#'
-#' Every word of every volume of the Tipitaka, with one word per
-#' column and one book per line. Each cell is the frequency at
-#' which that word appears in that book.
-#'
-#'
-#' @source Vipassana Research Institute, CST4, April 2020
-"tipitaka_wide"
 
 
 #' Names of each book of the Tipitaka, both abbreviated and
@@ -129,16 +100,8 @@
 #'   stringi::stri_unescape_unicode(sutta_pitaka$name)
 #' }
 #' # Count all the words in the Suttas:
-#' sum(
-#'   unique(
-#'     tipitaka_long[tipitaka_long$book %in% sutta_pitaka$book, "total"]))
-#'
-#' # Count another way:
-#' sum(tipitaka_long[tipitaka_long$book %in% sutta_pitaka$book, "n"])
-#'
-#' # Create a tibble of just the Suttas
-#' sutta_wide <-
-#'   tipitaka_wide[row.names(tipitaka_wide) %in% sutta_pitaka$book,]
+#' tl <- tipitaka_long()
+#' sum(unique(tl[tl$book %in% sutta_pitaka$book, "total"]))
 #'
 "sutta_pitaka"
 
@@ -163,7 +126,8 @@
 #' }
 #'
 #' # Count all the words in the Vinaya Pitaka:
-#' sum(tipitaka_long[tipitaka_long$book %in% vinaya_pitaka$book, "n"])
+#' tl <- tipitaka_long()
+#' sum(tl[tl$book %in% vinaya_pitaka$book, "n"])
 #'
 "vinaya_pitaka"
 
@@ -189,7 +153,8 @@
 #' }
 #'
 #' # Count all the words in the Abhidhamma Pitaka:
-#' sum(tipitaka_long[tipitaka_long$book %in% abhidhamma_pitaka$book, "n"])
+#' tl <- tipitaka_long()
+#' sum(tl[tl$book %in% abhidhamma_pitaka$book, "n"])
 #'
 "abhidhamma_pitaka"
 
@@ -202,7 +167,8 @@
 #'
 #' @examples
 #' # Show top content words in the Tipitaka (excluding stop words)
-#' content_words <- tipitaka_long[!tipitaka_long$word %in% pali_stop_words$word, ]
+#' tl <- tipitaka_long()
+#' content_words <- tl[!tl$word %in% pali_stop_words$word, ]
 #' head(content_words[order(-content_words$n), ], 10)
 #'
 #' @source \url{https://dsal.uchicago.edu/dictionaries/pali/}

@@ -2,15 +2,17 @@
 
 ## Changes
 
+* `tipitaka_long` and `tipitaka_wide` are now computed on demand from `tipitaka_raw` via `tipitaka_long()` and `tipitaka_wide()`, reducing the package tarball size.
+
 * Removed C++14 specification from SystemRequirements as C++17 (the default) suffices. This addresses CRAN's deprecation of C++11/C++14 specifications.
 
 * Moved several packages from Imports to Suggests (dplyr, magrittr, stringi) since they are only used in examples.
 
-* Removed `sati_sutta_long` and `sati_sutta_raw` demo datasets. The same data can now be extracted from the companion package `tipitaka.critical`.
+* Removed `sati_sutta_long` and `sati_sutta_raw` demo datasets.
 
-## Companion Package
+## Related Packages
 
-A new companion package `tipitaka.critical` provides a lemmatized critical edition of the complete Tipitaka (all three pitakas) based on a five-witness collation with sutta-level granularity. Install with:
+A companion package `tipitaka.critical` provides a lemmatized critical edition of the complete Tipitaka (all three pitakas) based on a five-witness collation with sutta-level granularity. Install with:
 
 ```r
 install.packages("tipitaka.critical")
