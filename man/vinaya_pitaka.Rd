@@ -27,8 +27,7 @@ vinaya_pitaka$name <-
 }
 
 # Count all the words in the Vinaya Pitaka:
-tl <- tipitaka_long()
-sum(tl[tl$book \%in\% vinaya_pitaka$book, "n"])
+sum(tipitaka_long[tipitaka_long$book \%in\% vinaya_pitaka$book, "n"])
 
 }
 \keyword{datasets}

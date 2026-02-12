@@ -32,8 +32,9 @@ Tipitaka version 4.0 (CST4) published by the Vipassana Research
 Institute. It covers all three pitakas (Vinaya, Sutta, and Abhidhamma).
 
 - `tipitaka_raw` — Full text per volume (shipped as data)
-- `tipitaka_long()` — Word frequencies per volume (computed on demand)
-- `tipitaka_wide()` — Word frequency matrix (computed on demand)
+- `tipitaka_long` — Word frequencies per volume (computed on first
+  access)
+- `tipitaka_wide` — Word frequency matrix (computed on first access)
 
 ## Pali Alphabet
 
@@ -69,8 +70,7 @@ the Pali Canon. For example:
 
 ``` r
 library(tipitaka)
-tw <- tipitaka_wide()
-dist_m <- dist(tw)
+dist_m <- dist(tipitaka_wide)
 cluster <- hclust(dist_m)
 plot(cluster)
 ```
@@ -92,14 +92,13 @@ Finally, we can look at word frequency by rank:
 
 ``` r
 library(dplyr, quietly = TRUE)
-tl <- tipitaka_long()
-freq_by_rank <- tl %>%
+freq_by_rank <- tipitaka_long %>%
   group_by(word) %>%
   add_count(wt = n, name = "word_total") %>%
   ungroup() %>%
   distinct(word, .keep_all = TRUE) %>%
   mutate(tipitaka_total =
-           sum(distinct(tl, book,
+           sum(distinct(tipitaka_long, book,
                         .keep_all = TRUE)$total)) %>%
     transform(freq = word_total/tipitaka_total) %>%
   arrange(desc(freq)) %>%
