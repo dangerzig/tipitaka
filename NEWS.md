@@ -1,3 +1,7 @@
+# tipitaka 1.0.1
+
+* Wrapped slow examples in `\donttest{}` to reduce CRAN check time.
+
 # tipitaka 1.0.0
 
 ## Changes
