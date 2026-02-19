@@ -20,8 +20,6 @@ This has been implemented in C++ as the original R version
 was about 500x slower.
 }
 \examples{
-\donttest{
-# A sorted list of 100 random words from the Tipitaka:
-pali_sort(sample(tipitaka_long$word, 100))
-}
+# Sort some Pali words into traditional alphabetical order:
+pali_sort(c("dhamma", "buddha", "sangha", "nibbana", "sutta"))
 }
